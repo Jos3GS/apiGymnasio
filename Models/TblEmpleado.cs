@@ -25,19 +25,4 @@ public partial class TblEmpleado
 
     public int? FkEspecialidad { get; set; }
 
-    public virtual TblCargo? FkCargoNavigation { get; set; }
-
-    public virtual TblEspecialidad? FkEspecialidadNavigation { get; set; }
-
-    public virtual TblTipoDocumento? FkTipoDocumentoNavigation { get; set; }
-
-    public virtual TblTurno? FkTurnoNavigation { get; set; }
-
-    public virtual TblUsuario? FkUsuarioNavigation { get; set; }
-
-    public virtual ICollection<TblDireccionEmpleado> TblDireccionEmpleados { get; set; } = new List<TblDireccionEmpleado>();
-
-    public virtual TblMonitor? TblMonitor { get; set; }
-
-    public virtual ICollection<TblTelEmpleadoEmpleado> TblTelEmpleadoEmpleados { get; set; } = new List<TblTelEmpleadoEmpleado>();
 }

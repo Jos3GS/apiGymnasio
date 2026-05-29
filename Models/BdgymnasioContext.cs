@@ -73,9 +73,9 @@ public partial class BdgymnasioContext : DbContext
 
     public virtual DbSet<TblUsuario> TblUsuarios { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB; Database=BDGymnasio; Trusted_Connection=SSPI; MultipleActiveResultSets=true; Trust Server Certificate=true");
+//    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+//        => optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB; Database=BDGymnasio; Trusted_Connection=SSPI; MultipleActiveResultSets=true; Trust Server Certificate=true");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -138,17 +138,7 @@ public partial class BdgymnasioContext : DbContext
                 .HasColumnName("nombre");
             entity.Property(e => e.UsuarioCrea).HasColumnName("usuarioCrea");
 
-            entity.HasOne(d => d.FkEspecialidadNavigation).WithMany(p => p.TblClases)
-                .HasForeignKey(d => d.FkEspecialidad)
-                .HasConstraintName("FK__tblClase__FK_esp__2FCF1A8A");
-
-            entity.HasOne(d => d.FkMonitorNavigation).WithMany(p => p.TblClases)
-                .HasForeignKey(d => d.FkMonitor)
-                .HasConstraintName("FK__tblClase__FK_mon__2DE6D218");
-
-            entity.HasOne(d => d.FkSalaNavigation).WithMany(p => p.TblClases)
-                .HasForeignKey(d => d.FkSala)
-                .HasConstraintName("FK__tblClase__FK_sal__2EDAF651");
+    
         });
 
         modelBuilder.Entity<TblDetalleMatricula>(entity =>
@@ -161,13 +151,7 @@ public partial class BdgymnasioContext : DbContext
             entity.Property(e => e.FkClase).HasColumnName("FK_clase");
             entity.Property(e => e.FkMatricula).HasColumnName("FK_matricula");
 
-            entity.HasOne(d => d.FkClaseNavigation).WithMany(p => p.TblDetalleMatriculas)
-                .HasForeignKey(d => d.FkClase)
-                .HasConstraintName("FK__tblDetall__FK_cl__32AB8735");
 
-            entity.HasOne(d => d.FkMatriculaNavigation).WithMany(p => p.TblDetalleMatriculas)
-                .HasForeignKey(d => d.FkMatricula)
-                .HasConstraintName("FK__tblDetall__FK_ma__339FAB6E");
         });
 
         modelBuilder.Entity<TblDireccionEmpleado>(entity =>
@@ -187,13 +171,7 @@ public partial class BdgymnasioContext : DbContext
             entity.Property(e => e.FkCiudad).HasColumnName("FK_ciudad");
             entity.Property(e => e.FkEmpleado).HasColumnName("FK_empleado");
 
-            entity.HasOne(d => d.FkCiudadNavigation).WithMany(p => p.TblDireccionEmpleados)
-                .HasForeignKey(d => d.FkCiudad)
-                .HasConstraintName("FK__tblDirecc__FK_ci__25518C17");
 
-            entity.HasOne(d => d.FkEmpleadoNavigation).WithMany(p => p.TblDireccionEmpleados)
-                .HasForeignKey(d => d.FkEmpleado)
-                .HasConstraintName("FK__tblDirecc__FK_em__245D67DE");
         });
 
         modelBuilder.Entity<TblDireccionSocio>(entity =>
@@ -213,13 +191,7 @@ public partial class BdgymnasioContext : DbContext
             entity.Property(e => e.FkCiudad).HasColumnName("FK_ciudad");
             entity.Property(e => e.FkSocio).HasColumnName("FK_socio");
 
-            entity.HasOne(d => d.FkCiudadNavigation).WithMany(p => p.TblDireccionSocios)
-                .HasForeignKey(d => d.FkCiudad)
-                .HasConstraintName("FK__tblDirecc__FK_ci__208CD6FA");
 
-            entity.HasOne(d => d.FkSocioNavigation).WithMany(p => p.TblDireccionSocios)
-                .HasForeignKey(d => d.FkSocio)
-                .HasConstraintName("FK__tblDirecc__FK_so__1F98B2C1");
         });
 
         modelBuilder.Entity<TblEmpleado>(entity =>
@@ -247,25 +219,6 @@ public partial class BdgymnasioContext : DbContext
             entity.Property(e => e.Salario).HasColumnName("salario");
             entity.Property(e => e.UsuarioCrea).HasColumnName("usuarioCrea");
 
-            entity.HasOne(d => d.FkCargoNavigation).WithMany(p => p.TblEmpleados)
-                .HasForeignKey(d => d.FkCargo)
-                .HasConstraintName("FK__tblEmplea__FK_ca__7F2BE32F");
-
-            entity.HasOne(d => d.FkEspecialidadNavigation).WithMany(p => p.TblEmpleados)
-                .HasForeignKey(d => d.FkEspecialidad)
-                .HasConstraintName("FK__tblEmplea__FK_es__01142BA1");
-
-            entity.HasOne(d => d.FkTipoDocumentoNavigation).WithMany(p => p.TblEmpleados)
-                .HasForeignKey(d => d.FkTipoDocumento)
-                .HasConstraintName("FK__tblEmplea__FK_ti__7D439ABD");
-
-            entity.HasOne(d => d.FkTurnoNavigation).WithMany(p => p.TblEmpleados)
-                .HasForeignKey(d => d.FkTurno)
-                .HasConstraintName("FK__tblEmplea__FK_tu__00200768");
-
-            entity.HasOne(d => d.FkUsuarioNavigation).WithMany(p => p.TblEmpleados)
-                .HasForeignKey(d => d.FkUsuario)
-                .HasConstraintName("FK__tblEmplea__FK_us__7E37BEF6");
         });
 
         modelBuilder.Entity<TblEspecialidad>(entity =>
@@ -367,13 +320,6 @@ public partial class BdgymnasioContext : DbContext
                 .HasColumnName("recurrente");
             entity.Property(e => e.UsuarioCrea).HasColumnName("usuarioCrea");
 
-            entity.HasOne(d => d.FkFormaPagoNavigation).WithMany(p => p.TblMatriculas)
-                .HasForeignKey(d => d.FkFormaPago)
-                .HasConstraintName("FK__tblMatric__FK_fo__2A164134");
-
-            entity.HasOne(d => d.FkSocioNavigation).WithMany(p => p.TblMatriculas)
-                .HasForeignKey(d => d.FkSocio)
-                .HasConstraintName("FK__tblMatric__FK_so__29221CFB");
         });
 
         modelBuilder.Entity<TblMembresium>(entity =>
@@ -411,14 +357,6 @@ public partial class BdgymnasioContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("titulacion");
 
-            entity.HasOne(d => d.FkEspecialidadNavigation).WithMany(p => p.TblMonitors)
-                .HasForeignKey(d => d.FkEspecialidad)
-                .HasConstraintName("FK__tblMonito__FK_es__04E4BC85");
-
-            entity.HasOne(d => d.Numero).WithOne(p => p.TblMonitor)
-                .HasForeignKey<TblMonitor>(d => d.NumeroId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__tblMonito__numer__03F0984C");
         });
 
         modelBuilder.Entity<TblProfesion>(entity =>
@@ -454,17 +392,7 @@ public partial class BdgymnasioContext : DbContext
             entity.Property(e => e.FkSala).HasColumnName("FK_sala");
             entity.Property(e => e.UsuarioCrea).HasColumnName("usuarioCrea");
 
-            entity.HasOne(d => d.FkEstadoConservacionNavigation).WithMany(p => p.TblRecursos)
-                .HasForeignKey(d => d.FkEstadoConservacion)
-                .HasConstraintName("FK__tblRecurs__FK_es__797309D9");
 
-            entity.HasOne(d => d.FkMarcaNavigation).WithMany(p => p.TblRecursos)
-                .HasForeignKey(d => d.FkMarca)
-                .HasConstraintName("FK__tblRecurs__FK_ma__7A672E12");
-
-            entity.HasOne(d => d.FkSalaNavigation).WithMany(p => p.TblRecursos)
-                .HasForeignKey(d => d.FkSala)
-                .HasConstraintName("FK__tblRecurs__FK_sa__787EE5A0");
         });
 
         modelBuilder.Entity<TblSala>(entity =>
@@ -485,13 +413,6 @@ public partial class BdgymnasioContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("ubicacion");
 
-            entity.HasOne(d => d.FkTamanoNavigation).WithMany(p => p.TblSalas)
-                .HasForeignKey(d => d.FkTamano)
-                .HasConstraintName("FK__tblSala__FK_tama__73BA3083");
-
-            entity.HasOne(d => d.FkTipoSalaNavigation).WithMany(p => p.TblSalas)
-                .HasForeignKey(d => d.FkTipoSala)
-                .HasConstraintName("FK__tblSala__FK_tipo__74AE54BC");
         });
 
         modelBuilder.Entity<TblSocio>(entity =>
@@ -523,21 +444,6 @@ public partial class BdgymnasioContext : DbContext
                 .HasColumnName("observacionMedica");
             entity.Property(e => e.UsuarioCrea).HasColumnName("usuarioCrea");
 
-            entity.HasOne(d => d.FkEstadoNavigation).WithMany(p => p.TblSocios)
-                .HasForeignKey(d => d.FkEstado)
-                .HasConstraintName("FK__tblSocio__FK_est__09A971A2");
-
-            entity.HasOne(d => d.FkMembresiaNavigation).WithMany(p => p.TblSocios)
-                .HasForeignKey(d => d.FkMembresia)
-                .HasConstraintName("FK__tblSocio__FK_mem__0A9D95DB");
-
-            entity.HasOne(d => d.FkProfesionNavigation).WithMany(p => p.TblSocios)
-                .HasForeignKey(d => d.FkProfesion)
-                .HasConstraintName("FK__tblSocio__FK_pro__07C12930");
-
-            entity.HasOne(d => d.FkTipoDocumentoNavigation).WithMany(p => p.TblSocios)
-                .HasForeignKey(d => d.FkTipoDocumento)
-                .HasConstraintName("FK__tblSocio__FK_tip__08B54D69");
         });
 
         modelBuilder.Entity<TblTamano>(entity =>
@@ -567,13 +473,7 @@ public partial class BdgymnasioContext : DbContext
             entity.Property(e => e.FkEmpleado).HasColumnName("FK_empleado");
             entity.Property(e => e.FkTelefonoEmpleado).HasColumnName("FK_telefonoEmpleado");
 
-            entity.HasOne(d => d.FkEmpleadoNavigation).WithMany(p => p.TblTelEmpleadoEmpleados)
-                .HasForeignKey(d => d.FkEmpleado)
-                .HasConstraintName("FK__tblTelEmp__FK_em__1BC821DD");
 
-            entity.HasOne(d => d.FkTelefonoEmpleadoNavigation).WithMany(p => p.TblTelEmpleadoEmpleados)
-                .HasForeignKey(d => d.FkTelefonoEmpleado)
-                .HasConstraintName("FK__tblTelEmp__FK_te__1AD3FDA4");
         });
 
         modelBuilder.Entity<TblTelSocioSocio>(entity =>
@@ -586,13 +486,6 @@ public partial class BdgymnasioContext : DbContext
             entity.Property(e => e.FkSocio).HasColumnName("FK_socio");
             entity.Property(e => e.FkTelefonoSocio).HasColumnName("FK_telefonoSocio");
 
-            entity.HasOne(d => d.FkSocioNavigation).WithMany(p => p.TblTelSocioSocios)
-                .HasForeignKey(d => d.FkSocio)
-                .HasConstraintName("FK__tblTelSoc__FK_so__1332DBDC");
-
-            entity.HasOne(d => d.FkTelefonoSocioNavigation).WithMany(p => p.TblTelSocioSocios)
-                .HasForeignKey(d => d.FkTelefonoSocio)
-                .HasConstraintName("FK__tblTelSoc__FK_te__123EB7A3");
         });
 
         modelBuilder.Entity<TblTelefonoEmpleado>(entity =>
@@ -611,9 +504,7 @@ public partial class BdgymnasioContext : DbContext
                 .HasDefaultValue(false)
                 .HasColumnName("principal");
 
-            entity.HasOne(d => d.FkTipoTelefonoNavigation).WithMany(p => p.TblTelefonoEmpleados)
-                .HasForeignKey(d => d.FkTipoTelefono)
-                .HasConstraintName("FK__tblTelefo__FK_ti__17F790F9");
+
         });
 
         modelBuilder.Entity<TblTelefonoSocio>(entity =>
@@ -632,9 +523,7 @@ public partial class BdgymnasioContext : DbContext
                 .HasDefaultValue(false)
                 .HasColumnName("principal");
 
-            entity.HasOne(d => d.FkTipoTelefonoNavigation).WithMany(p => p.TblTelefonoSocios)
-                .HasForeignKey(d => d.FkTipoTelefono)
-                .HasConstraintName("FK__tblTelefo__FK_ti__0F624AF8");
+
         });
 
         modelBuilder.Entity<TblTipoDocumento>(entity =>

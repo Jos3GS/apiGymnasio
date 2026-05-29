@@ -11,5 +11,4 @@ public partial class TblEstadoConservacion
 
     public bool? Activo { get; set; }
 
-    public virtual ICollection<TblRecurso> TblRecursos { get; set; } = new List<TblRecurso>();
 }

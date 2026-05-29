@@ -9,5 +9,4 @@ public partial class TblProfesion
 
     public string? Nombre { get; set; }
 
-    public virtual ICollection<TblSocio> TblSocios { get; set; } = new List<TblSocio>();
 }

@@ -20,10 +20,4 @@ public partial class TblMatricula
     public int? FkSocio { get; set; }
 
     public int? FkFormaPago { get; set; }
-
-    public virtual TblFormaPago? FkFormaPagoNavigation { get; set; }
-
-    public virtual TblSocio? FkSocioNavigation { get; set; }
-
-    public virtual ICollection<TblDetalleMatricula> TblDetalleMatriculas { get; set; } = new List<TblDetalleMatricula>();
 }

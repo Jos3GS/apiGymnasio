@@ -11,5 +11,4 @@ public partial class TblCargo
 
     public bool? Activo { get; set; }
 
-    public virtual ICollection<TblEmpleado> TblEmpleados { get; set; } = new List<TblEmpleado>();
 }

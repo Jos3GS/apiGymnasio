@@ -14,8 +14,4 @@ public partial class TblDireccionEmpleado
     public int? FkEmpleado { get; set; }
 
     public int? FkCiudad { get; set; }
-
-    public virtual TblCiudad? FkCiudadNavigation { get; set; }
-
-    public virtual TblEmpleado? FkEmpleadoNavigation { get; set; }
 }

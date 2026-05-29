@@ -11,5 +11,4 @@ public partial class TblMarca
 
     public string Contacto { get; set; } = null!;
 
-    public virtual ICollection<TblRecurso> TblRecursos { get; set; } = new List<TblRecurso>();
 }

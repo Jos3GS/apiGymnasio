@@ -10,8 +10,4 @@ public partial class TblTelSocioSocio
     public int? FkTelefonoSocio { get; set; }
 
     public int? FkSocio { get; set; }
-
-    public virtual TblSocio? FkSocioNavigation { get; set; }
-
-    public virtual TblTelefonoSocio? FkTelefonoSocioNavigation { get; set; }
 }

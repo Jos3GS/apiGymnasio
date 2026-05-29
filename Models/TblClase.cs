@@ -23,11 +23,4 @@ public partial class TblClase
 
     public int? FkEspecialidad { get; set; }
 
-    public virtual TblEspecialidad? FkEspecialidadNavigation { get; set; }
-
-    public virtual TblMonitor? FkMonitorNavigation { get; set; }
-
-    public virtual TblSala? FkSalaNavigation { get; set; }
-
-    public virtual ICollection<TblDetalleMatricula> TblDetalleMatriculas { get; set; } = new List<TblDetalleMatricula>();
 }

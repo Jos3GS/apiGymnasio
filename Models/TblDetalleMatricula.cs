@@ -10,8 +10,4 @@ public partial class TblDetalleMatricula
     public int? FkClase { get; set; }
 
     public int? FkMatricula { get; set; }
-
-    public virtual TblClase? FkClaseNavigation { get; set; }
-
-    public virtual TblMatricula? FkMatriculaNavigation { get; set; }
 }

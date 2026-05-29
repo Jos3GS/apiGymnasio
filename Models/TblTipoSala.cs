@@ -11,5 +11,4 @@ public partial class TblTipoSala
 
     public string Descripcion { get; set; } = null!;
 
-    public virtual ICollection<TblSala> TblSalas { get; set; } = new List<TblSala>();
 }

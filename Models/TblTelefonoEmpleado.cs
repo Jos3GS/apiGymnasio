@@ -15,7 +15,4 @@ public partial class TblTelefonoEmpleado
 
     public int? FkTipoTelefono { get; set; }
 
-    public virtual TblTipoTelefono? FkTipoTelefonoNavigation { get; set; }
-
-    public virtual ICollection<TblTelEmpleadoEmpleado> TblTelEmpleadoEmpleados { get; set; } = new List<TblTelEmpleadoEmpleado>();
 }

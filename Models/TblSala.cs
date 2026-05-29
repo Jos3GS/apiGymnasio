@@ -16,12 +16,4 @@ public partial class TblSala
     public int? FkTamano { get; set; }
 
     public int? FkTipoSala { get; set; }
-
-    public virtual TblTamano? FkTamanoNavigation { get; set; }
-
-    public virtual TblTipoSala? FkTipoSalaNavigation { get; set; }
-
-    public virtual ICollection<TblClase> TblClases { get; set; } = new List<TblClase>();
-
-    public virtual ICollection<TblRecurso> TblRecursos { get; set; } = new List<TblRecurso>();
 }

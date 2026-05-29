@@ -12,10 +12,4 @@ public partial class TblMonitor
     public string? Titulacion { get; set; }
 
     public int? FkEspecialidad { get; set; }
-
-    public virtual TblEspecialidad? FkEspecialidadNavigation { get; set; }
-
-    public virtual TblEmpleado Numero { get; set; } = null!;
-
-    public virtual ICollection<TblClase> TblClases { get; set; } = new List<TblClase>();
 }

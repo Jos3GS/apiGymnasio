@@ -13,5 +13,4 @@ public partial class TblTamano
 
     public bool? Activo { get; set; }
 
-    public virtual ICollection<TblSala> TblSalas { get; set; } = new List<TblSala>();
 }

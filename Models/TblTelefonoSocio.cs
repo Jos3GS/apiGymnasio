@@ -14,8 +14,4 @@ public partial class TblTelefonoSocio
     public bool? Activo { get; set; }
 
     public int? FkTipoTelefono { get; set; }
-
-    public virtual TblTipoTelefono? FkTipoTelefonoNavigation { get; set; }
-
-    public virtual ICollection<TblTelSocioSocio> TblTelSocioSocios { get; set; } = new List<TblTelSocioSocio>();
 }

@@ -11,7 +11,4 @@ public partial class TblTelEmpleadoEmpleado
 
     public int? FkEmpleado { get; set; }
 
-    public virtual TblEmpleado? FkEmpleadoNavigation { get; set; }
-
-    public virtual TblTelefonoEmpleado? FkTelefonoEmpleadoNavigation { get; set; }
 }

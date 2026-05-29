@@ -15,5 +15,3 @@ public partial class TblTurno
 
     public bool? Activo { get; set; }
 
-    public virtual ICollection<TblEmpleado> TblEmpleados { get; set; } = new List<TblEmpleado>();
-}

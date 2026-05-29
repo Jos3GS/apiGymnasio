@@ -12,10 +12,4 @@ public partial class TblEspecialidad
     public bool? Activo { get; set; }
 
     public int UsuarioCrea { get; set; }
-
-    public virtual ICollection<TblClase> TblClases { get; set; } = new List<TblClase>();
-
-    public virtual ICollection<TblEmpleado> TblEmpleados { get; set; } = new List<TblEmpleado>();
-
-    public virtual ICollection<TblMonitor> TblMonitors { get; set; } = new List<TblMonitor>();
 }

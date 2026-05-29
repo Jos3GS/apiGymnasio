@@ -26,18 +26,4 @@ public partial class TblSocio
     public int? FkEstado { get; set; }
 
     public int? FkMembresia { get; set; }
-
-    public virtual TblEstado? FkEstadoNavigation { get; set; }
-
-    public virtual TblMembresium? FkMembresiaNavigation { get; set; }
-
-    public virtual TblProfesion? FkProfesionNavigation { get; set; }
-
-    public virtual TblTipoDocumento? FkTipoDocumentoNavigation { get; set; }
-
-    public virtual ICollection<TblDireccionSocio> TblDireccionSocios { get; set; } = new List<TblDireccionSocio>();
-
-    public virtual ICollection<TblMatricula> TblMatriculas { get; set; } = new List<TblMatricula>();
-
-    public virtual ICollection<TblTelSocioSocio> TblTelSocioSocios { get; set; } = new List<TblTelSocioSocio>();
 }

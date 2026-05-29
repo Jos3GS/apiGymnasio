@@ -15,7 +15,4 @@ public partial class TblDireccionSocio
 
     public int? FkCiudad { get; set; }
 
-    public virtual TblCiudad? FkCiudadNavigation { get; set; }
-
-    public virtual TblSocio? FkSocioNavigation { get; set; }
 }

@@ -10,8 +10,4 @@ public partial class TblTipoDocumento
     public string Nombre { get; set; } = null!;
 
     public bool? Activo { get; set; }
-
-    public virtual ICollection<TblEmpleado> TblEmpleados { get; set; } = new List<TblEmpleado>();
-
-    public virtual ICollection<TblSocio> TblSocios { get; set; } = new List<TblSocio>();
 }
