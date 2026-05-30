@@ -18,39 +18,60 @@ namespace apiGymnasio.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<TblTipoTelefono>> Get() => Ok(_op.ListarTipoTelefono());
+        public List<TblTipoTelefono> Get() => _op.ListarTipoTelefono();
 
         [HttpGet("{id}")]
-        public ActionResult<TblTipoTelefono> Get(int id)
+        public object Get(int id)
         {
             var res = _op.ListarTipoTelefono(id);
-            if (res == null) return NotFound(_op.message);
-            return Ok(res);
+            if (res == null)
+            {
+                Response.StatusCode = 404;
+                return new { message = _op.message };
+            }
+            return res;
         }
 
         [HttpPost]
-        public ActionResult Post([FromBody] TblTipoTelefono obj)
+        public object Post([FromBody] TblTipoTelefono obj)
         {
             _op.tblTipoTelefono = obj;
-            if (!_op.agregarTipoTelefono()) return BadRequest(_op.message);
-            return CreatedAtAction(nameof(Get), new { id = obj.Codigo }, obj);
+            if (!_op.agregarTipoTelefono())
+            {
+                Response.StatusCode = 400;
+                return new { message = _op.message };
+            }
+            Response.StatusCode = 201;
+            return obj;
         }
 
         [HttpPut("{id}")]
-        public ActionResult Put(int id, [FromBody] TblTipoTelefono obj)
+        public object Put(int id, [FromBody] TblTipoTelefono obj)
         {
-            if (obj == null || id != obj.Codigo) return BadRequest("Id inválido");
+            if (obj == null || id != obj.Codigo)
+            {
+                Response.StatusCode = 400;
+                return new { message = "Id inválido" };
+            }
             _op.tblTipoTelefono = obj;
-            if (!_op.modificarTipoTelefono()) return BadRequest(_op.message);
-            return Ok(_op.message);
+            if (!_op.modificarTipoTelefono())
+            {
+                Response.StatusCode = 400;
+                return new { message = _op.message };
+            }
+            return new { message = _op.message };
         }
 
         [HttpDelete("{id}")]
-        public ActionResult Delete(int id)
+        public object Delete(int id)
         {
             _op.tblTipoTelefono = new TblTipoTelefono { Codigo = id };
-            if (!_op.eliminarTipoTelefono()) return BadRequest(_op.message);
-            return Ok(_op.message);
+            if (!_op.eliminarTipoTelefono())
+            {
+                Response.StatusCode = 400;
+                return new { message = _op.message };
+            }
+            return new { message = _op.message };
         }
     }
 }
