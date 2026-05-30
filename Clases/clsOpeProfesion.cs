@@ -45,5 +45,65 @@ namespace apiGymnasio.Clases
             }
         }
 
+        public bool modificarProfesion()
+        {
+            try
+            {
+                if (tblProfesion == null)
+                {
+                    message = "No se ha asignado una profesión para modificar";
+                    return false;
+                }
+                var temp = oGym.TblProfesions.FirstOrDefault(x => x.Codigo == tblProfesion.Codigo);
+                if (temp == null)
+                {
+                    message = "No se encontró la profesión a modificar, Reintentalo nuevamente.";
+                    return false;
+                }
+                temp = oGym.TblProfesions.FirstOrDefault(x => x.Nombre.ToLower() == tblProfesion.Nombre.ToLower() && x.Codigo != tblProfesion.Codigo);
+                if (temp != null)
+                {
+                    message = "Ya existe una profesión con el mismo nombre, Reintentalo nuevamente.";
+                    return false;
+                }
+                oGym.TblProfesions.Update(tblProfesion);
+                oGym.SaveChanges();
+                message = "Profesión modificada correctamente.";
+                return true;
+            }
+            catch
+            {
+                message = "Error al modificar la profesión, Reintentalo nuevamente.";
+                return false;
+            }
         }
+
+        public bool eliminarProfesion()
+        {
+            try
+            {
+                if (tblProfesion == null)
+                {
+                    message = "No se ha asignado una profesión para eliminar";
+                    return false;
+                }
+                var temp = oGym.TblProfesions.FirstOrDefault(x => x.Codigo == tblProfesion.Codigo);
+                if (temp == null)
+                {
+                    message = "No se encontró la profesión a eliminar, Reintentalo nuevamente.";
+                    return false;
+                }
+                oGym.TblProfesions.Remove(tblProfesion);
+                oGym.SaveChanges();
+                message = "Profesión eliminada correctamente.";
+                return true;
+            }
+            catch
+            {
+                message = "Error al eliminar la profesión, Reintentalo nuevamente.";
+                return false;
+            }
+
+        }
+    }
 }
