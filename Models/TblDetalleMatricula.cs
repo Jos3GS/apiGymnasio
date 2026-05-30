@@ -12,3 +12,4 @@ public partial class TblDetalleMatricula
     public int? FkClase { get; set; }
 
     public int? FkMatricula { get; set; }
+}

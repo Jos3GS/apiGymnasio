@@ -21,4 +21,3 @@ public partial class TblRecurso
 
     public int? FkMarca { get; set; }
 }
-

@@ -17,8 +17,6 @@ public partial class TblMatricula
 
     public int UsuarioCrea { get; set; }
 
-    public int? FkSocio { get; set; }
-
     public int? FkFormaPago { get; set; }
 
 }
