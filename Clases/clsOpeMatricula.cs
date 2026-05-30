@@ -20,7 +20,21 @@ namespace apiGymnasio.Clases
 
         public TblMatricula? listarMatriculas(int codigo)
         {
-            return oGym.TblMatriculas.FirstOrDefault(x => x.Codigo == codigo);
+            try
+            {
+                var temp = oGym.TblMatriculas.FirstOrDefault(x => x.Codigo == codigo);
+                if (temp == null)
+                {
+                    message = "No se ha encontrado la matrícula para el código ingresado, Reintentalo nuevamente.";
+                    return null;
+                }
+                return temp;
+            }
+            catch 
+            {
+                message = "Error al buscar la matrícula. Reintentalo nuevamente.";
+                return null;
+            }
         }
 
 
