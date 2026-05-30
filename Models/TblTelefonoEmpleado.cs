@@ -14,5 +14,4 @@ public partial class TblTelefonoEmpleado
     public bool? Activo { get; set; }
 
     public int? FkTipoTelefono { get; set; }
-
 }

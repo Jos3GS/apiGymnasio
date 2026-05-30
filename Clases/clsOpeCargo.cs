@@ -61,7 +61,7 @@ namespace apiGymnasio.Clases
                     message = "No se encontro el cargo a modificar";
                     return false;
                 }
-                temp = oGym.TblCargos.FirstOrDefault(x => x.Nombre.ToLower() == tblCargo.Nombre.ToLower());
+                temp = oGym.TblCargos.FirstOrDefault(x => x.Nombre.ToLower() == tblCargo.Nombre.ToLower() && x.Codigo != tblCargo.Codigo);
                 if(temp != null)
                 {
                     message = "El nombre del cargo no puede ser igual a uno existente";

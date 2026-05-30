@@ -60,7 +60,7 @@ namespace apiGymnasio.Clases
                     message = "No se ha encontrado la ciudad para modificar, Reintentalo nuevamente.";
                     return false;
                 }
-                temp = oGym.TblCiudads.FirstOrDefault(x => x.Nombre.ToLower() == tblCiudad.Nombre.ToLower());
+                temp = oGym.TblCiudads.FirstOrDefault(x => x.Nombre.ToLower() == tblCiudad.Nombre.ToLower() && x.Codigo != tblCiudad.Codigo);
                 if (temp != null)
                 {
                     message = "Ya existe una ciudad con el mismo nombre, Reintentalo nuevamente.";

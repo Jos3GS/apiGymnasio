@@ -20,4 +20,5 @@ public partial class TblRecurso
     public int? FkEstadoConservacion { get; set; }
 
     public int? FkMarca { get; set; }
+
 }

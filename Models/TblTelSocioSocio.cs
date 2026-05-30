@@ -10,4 +10,5 @@ public partial class TblTelSocioSocio
     public int? FkTelefonoSocio { get; set; }
 
     public int? FkSocio { get; set; }
+
 }

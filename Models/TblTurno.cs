@@ -15,3 +15,4 @@ public partial class TblTurno
 
     public bool? Activo { get; set; }
 
+}

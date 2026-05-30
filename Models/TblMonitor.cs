@@ -12,4 +12,5 @@ public partial class TblMonitor
     public string? Titulacion { get; set; }
 
     public int? FkEspecialidad { get; set; }
+
 }
