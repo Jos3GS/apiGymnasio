@@ -79,13 +79,14 @@ namespace apiGymnasio.Clases
                     message = "No se encontró la profesión a modificar, Reintentalo nuevamente.";
                     return false;
                 }
-                temp = oGym.TblProfesions.FirstOrDefault(x => x.Nombre.ToLower() == tblProfesion.Nombre.ToLower() && x.Codigo != tblProfesion.Codigo);
-                if (temp != null)
+                var duplicado = oGym.TblProfesions.FirstOrDefault(x => x.Nombre.ToLower() == tblProfesion.Nombre.ToLower() && x.Codigo != tblProfesion.Codigo);
+                if (duplicado != null)
                 {
                     message = "Ya existe una profesión con el mismo nombre, Reintentalo nuevamente.";
                     return false;
                 }
-                oGym.TblProfesions.Update(tblProfesion);
+
+                temp.Nombre = tblProfesion.Nombre;
                 oGym.SaveChanges();
                 message = "Profesión modificada correctamente.";
                 return true;
@@ -112,7 +113,7 @@ namespace apiGymnasio.Clases
                     message = "No se encontró la profesión a eliminar, Reintentalo nuevamente.";
                     return false;
                 }
-                oGym.TblProfesions.Remove(tblProfesion);
+                oGym.TblProfesions.Remove(temp);
                 oGym.SaveChanges();
                 message = "Profesión eliminada correctamente.";
                 return true;

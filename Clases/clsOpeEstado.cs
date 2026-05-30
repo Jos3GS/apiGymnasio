@@ -73,19 +73,22 @@ namespace apiGymnasio.Clases
                     message = "No se ha asignado un estado para modificar";
                     return false;
                 }
-                var temp = oGym.TblEstados.FirstOrDefault(x => x.Codigo == tblEstado.Codigo);
-                if (temp == null)
+                var existente = oGym.TblEstados.FirstOrDefault(x => x.Codigo == tblEstado.Codigo);
+                if (existente == null)
                 {
                     message = "No se ha encontrado el estado para modificar, Reintentalo nuevamente.";
                     return false;
                 }
-                temp = oGym.TblEstados.FirstOrDefault(x => x.Nombre.ToLower() == tblEstado.Nombre.ToLower() && x.Codigo != tblEstado.Codigo);
-                if (temp != null)
+
+                var duplicado = oGym.TblEstados.FirstOrDefault(x => x.Nombre.ToLower() == tblEstado.Nombre.ToLower() && x.Codigo != tblEstado.Codigo);
+                if (duplicado != null)
                 {
                     message = "Ya existe un estado con el mismo nombre, Reintentalo nuevamente.";
                     return false;
                 }
-                oGym.TblEstados.Update(tblEstado);
+
+                existente.Nombre = tblEstado.Nombre;
+                existente.Activo = tblEstado.Activo;
                 oGym.SaveChanges();
                 message = "Estado modificado correctamente.";
                 return true;

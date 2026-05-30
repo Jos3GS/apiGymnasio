@@ -149,14 +149,23 @@ namespace apiGymnasio.Clases
                     message = "No se ha asignado un empleado para modificar";
                     return false;
                 }
-                var temp = oGym.TblEmpleados.FirstOrDefault(x => x.NumeroId == tblEmpleado.NumeroId);
-                if (temp == null)
+                var existente = oGym.TblEmpleados.FirstOrDefault(x => x.NumeroId == tblEmpleado.NumeroId);
+                if (existente == null)
                 {
                     message = "No se ha encontrado el empleado para modificar, Reintentalo nuevamente.";
                     return false;
                 }
 
-                oGym.TblEmpleados.Update(tblEmpleado);
+                existente.Salario = tblEmpleado.Salario;
+                existente.Nombre = tblEmpleado.Nombre;
+                existente.Apellidos = tblEmpleado.Apellidos;
+                existente.UsuarioCrea = tblEmpleado.UsuarioCrea;
+                existente.FkTipoDocumento = tblEmpleado.FkTipoDocumento;
+                existente.FkUsuario = tblEmpleado.FkUsuario;
+                existente.FkCargo = tblEmpleado.FkCargo;
+                existente.FkTurno = tblEmpleado.FkTurno;
+                existente.FkEspecialidad = tblEmpleado.FkEspecialidad;
+
                 oGym.SaveChanges();
                 message = "Empleado modificado correctamente.";
                 return true;

@@ -67,19 +67,24 @@ namespace apiGymnasio.Clases
                     message = "No se ha asignado una dirección del socio para modificar";
                     return false;
                 }
-                var temp = oGym.TblDireccionSocios.FirstOrDefault(x => x.Codigo == tblDireccionSocio.Codigo);
-                if (temp == null)
+                var existente = oGym.TblDireccionSocios.FirstOrDefault(x => x.Codigo == tblDireccionSocio.Codigo);
+                if (existente == null)
                 {
                     message = "No se ha encontrado la dirección del socio para el código ingresado, Reintentalo nuevamente.";
                     return false;
                 }
-                temp = oGym.TblDireccionSocios.FirstOrDefault(x => x.Direccion == tblDireccionSocio.Direccion && x.Codigo != tblDireccionSocio.Codigo);
-                if (temp != null)
+
+                var duplicado = oGym.TblDireccionSocios.FirstOrDefault(x => x.Direccion == tblDireccionSocio.Direccion && x.Codigo != tblDireccionSocio.Codigo);
+                if (duplicado != null)
                 {
                     message = "Ya existe la dirección del socio, Reintentalo nuevamente.";
                     return false;
                 }
-                oGym.TblDireccionSocios.Update(tblDireccionSocio);
+
+                existente.Direccion = tblDireccionSocio.Direccion;
+                existente.Activo = tblDireccionSocio.Activo;
+                existente.FkSocio = tblDireccionSocio.FkSocio;
+                existente.FkCiudad = tblDireccionSocio.FkCiudad;
                 oGym.SaveChanges();
                 message = "Dirección del socio modificada correctamente.";
                 return true;
@@ -106,7 +111,7 @@ namespace apiGymnasio.Clases
                     message = "No se ha encontrado la dirección del socio, Reintentalo nuevamente.";
                     return false;
                 }
-                oGym.TblDireccionSocios.Remove(tblDireccionSocio);
+                oGym.TblDireccionSocios.Remove(temp);
                 oGym.SaveChanges();
                 message = "Dirección del socio eliminada correctamente.";
                 return true;

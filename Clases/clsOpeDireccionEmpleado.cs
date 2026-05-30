@@ -79,7 +79,12 @@ namespace apiGymnasio.Clases
                     message = "Ya existe la dirección del empleado, Reintentalo nuevamente.";
                     return false;
                 }
-                oGym.TblDireccionEmpleados.Update(tblDireccionEmpleado);
+                // Actualizar propiedades en la entidad rastreada por el contexto
+                var existente = temp; // 'temp' ya es la entidad existente
+                existente.Direccion = tblDireccionEmpleado.Direccion;
+                existente.Activo = tblDireccionEmpleado.Activo;
+                existente.FkEmpleado = tblDireccionEmpleado.FkEmpleado;
+                existente.FkCiudad = tblDireccionEmpleado.FkCiudad;
                 oGym.SaveChanges();
                 message = "Dirección del empleado modificada correctamente.";
                 return true;
@@ -106,7 +111,7 @@ namespace apiGymnasio.Clases
                     message = "No se ha encontrado la dirección del empleado, Reintentalo nuevamente.";
                     return false;
                 }
-                oGym.TblDireccionEmpleados.Remove(tblDireccionEmpleado);
+                oGym.TblDireccionEmpleados.Remove(temp);
                 oGym.SaveChanges();
                 message = "Dirección del empleado eliminada correctamente.";
                 return true;

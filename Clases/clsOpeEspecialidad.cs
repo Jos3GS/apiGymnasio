@@ -79,13 +79,15 @@ namespace apiGymnasio.Clases
                     message = "No se ha encontrado la especialidad para modificar, Reintentalo nuevamente.";
                     return false;
                 }
-                temp = oGym.TblEspecialidads.FirstOrDefault(x => x.Nombre.ToLower() == tblEspecialidad.Nombre.ToLower() && x.Codigo != tblEspecialidad.Codigo);
-                if (temp != null)
+                var duplicado = oGym.TblEspecialidads.FirstOrDefault(x => x.Nombre.ToLower() == tblEspecialidad.Nombre.ToLower() && x.Codigo != tblEspecialidad.Codigo);
+                if (duplicado != null)
                 {
                     message = "Ya existe una especialidad con el mismo nombre, Reintentalo nuevamente.";
                     return false;
                 }
-                oGym.TblEspecialidads.Update(tblEspecialidad);
+
+                temp.Nombre = tblEspecialidad.Nombre;
+                temp.Activo = tblEspecialidad.Activo;
                 oGym.SaveChanges();
                 message = "Especialidad modificada correctamente.";
                 return true;

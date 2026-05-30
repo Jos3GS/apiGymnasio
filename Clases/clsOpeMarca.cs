@@ -80,13 +80,15 @@ namespace apiGymnasio.Clases
                     message = "No se ha encontrado la marca para modificar, Reintentalo nuevamente.";
                     return false;
                 }
-                temp = oGym.TblMarcas.FirstOrDefault(x => x.Nombre.ToLower() == tblMarca.Nombre.ToLower() && x.Codigo != tblMarca.Codigo);
-                if (temp != null)
+                var duplicado = oGym.TblMarcas.FirstOrDefault(x => x.Nombre.ToLower() == tblMarca.Nombre.ToLower() && x.Codigo != tblMarca.Codigo);
+                if (duplicado != null)
                 {
                     message = "Ya existe una marca con el mismo nombre, Reintentalo nuevamente.";
                     return false;
                 }
-                oGym.TblMarcas.Update(tblMarca);
+
+                temp.Nombre = tblMarca.Nombre;
+                temp.Contacto = tblMarca.Contacto;
                 oGym.SaveChanges();
                 message = "Marca modificada correctamente.";
                 return true;
@@ -114,7 +116,7 @@ namespace apiGymnasio.Clases
                     message = "No se ha encontrado la marca para eliminar, Reintentalo nuevamente.";
                     return false;
                 }
-                oGym.TblMarcas.Remove(temp);
+                oGym.Remove(temp);
                 oGym.SaveChanges();
                 message = "Marca eliminada correctamente.";
                 return true;

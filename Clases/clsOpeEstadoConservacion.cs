@@ -73,19 +73,22 @@ namespace apiGymnasio.Clases
                     message = "No se ha asignado un estado de conservación para modificar";
                     return false;
                 }
-                var temp = oGym.TblEstadoConservacions.FirstOrDefault(x => x.Codigo == tblEstadoConservacion.Codigo);
-                if (temp == null)
+                var existente = oGym.TblEstadoConservacions.FirstOrDefault(x => x.Codigo == tblEstadoConservacion.Codigo);
+                if (existente == null)
                 {
                     message = "No se ha encontrado el estado de conservación para modificar, Reintentalo nuevamente.";
                     return false;
                 }
-                temp = oGym.TblEstadoConservacions.FirstOrDefault(x => x.Nombre.ToLower() == tblEstadoConservacion.Nombre.ToLower() && x.Codigo != tblEstadoConservacion.Codigo);
-                if (temp == null)
+
+                var duplicado = oGym.TblEstadoConservacions.FirstOrDefault(x => x.Nombre.ToLower() == tblEstadoConservacion.Nombre.ToLower() && x.Codigo != tblEstadoConservacion.Codigo);
+                if (duplicado != null)
                 {
                     message = "Ya existe un estado de conservación con el mismo nombre, Reintentalo nuevamente.";
                     return false;
                 }
-                oGym.TblEstadoConservacions.Update(tblEstadoConservacion);
+
+                existente.Nombre = tblEstadoConservacion.Nombre;
+                existente.Activo = tblEstadoConservacion.Activo;
                 oGym.SaveChanges();
                 message = "Estado de conservación modificado correctamente.";
                 return true;

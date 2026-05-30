@@ -80,13 +80,15 @@ namespace apiGymnasio.Clases
                     message = "No se ha encontrado la membresía para modificar, Reintentalo nuevamente.";
                     return false;
                 }
-                temp = oGym.TblMembresia.FirstOrDefault(x => x.Nombre.ToLower() == tblMembresia.Nombre.ToLower() && x.Codigo != tblMembresia.Codigo);
-                if (temp != null)
+                var duplicado = oGym.TblMembresia.FirstOrDefault(x => x.Nombre.ToLower() == tblMembresia.Nombre.ToLower() && x.Codigo != tblMembresia.Codigo);
+                if (duplicado != null)
                 {
                     message = "Ya existe una membresía con el mismo nombre, Reintentalo nuevamente.";
                     return false;
                 }
-                oGym.TblMembresia.Update(tblMembresia);
+
+                temp.Nombre = tblMembresia.Nombre;
+                temp.Activo = tblMembresia.Activo;
                 oGym.SaveChanges();
                 message = "Membresía modificada correctamente.";
                 return true;

@@ -73,19 +73,22 @@ namespace apiGymnasio.Clases
                     message = "No se ha asignado una forma de pago para modificar";
                     return false;
                 }
-                var temp = oGym.TblFormaPagos.FirstOrDefault(x => x.Codigo == tblFormaPago.Codigo);
-                if (temp == null)
+                var existente = oGym.TblFormaPagos.FirstOrDefault(x => x.Codigo == tblFormaPago.Codigo);
+                if (existente == null)
                 {
                     message = "No se ha encontrado la forma de pago para modificar, Reintentalo nuevamente.";
                     return false;
                 }
-                temp = oGym.TblFormaPagos.FirstOrDefault(x => x.Nombre.ToLower() == tblFormaPago.Nombre.ToLower() && x.Codigo != tblFormaPago.Codigo);
-                if (temp != null)
+
+                var duplicado = oGym.TblFormaPagos.FirstOrDefault(x => x.Nombre.ToLower() == tblFormaPago.Nombre.ToLower() && x.Codigo != tblFormaPago.Codigo);
+                if (duplicado != null)
                 {
                     message = "Ya existe una forma de pago con el mismo nombre, Reintentalo nuevamente.";
                     return false;
                 }
-                oGym.TblFormaPagos.Update(tblFormaPago);
+
+                existente.Nombre = tblFormaPago.Nombre;
+                existente.Activo = tblFormaPago.Activo;
                 oGym.SaveChanges();
                 message = "Forma de pago modificada correctamente.";
                 return true;

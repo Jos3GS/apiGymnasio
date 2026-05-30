@@ -73,19 +73,21 @@ namespace apiGymnasio.Clases
                     message = "No se ha asignado un tipo de sala para modificar";
                     return false;
                 }
-                var temp = oGym.TblTipoSalas.FirstOrDefault(x => x.Codigo == tblTipoSala.Codigo);
-                if (temp == null)
+                var existente = oGym.TblTipoSalas.FirstOrDefault(x => x.Codigo == tblTipoSala.Codigo);
+                if (existente == null)
                 {
                     message = "No se encontró el tipo de sala a modificar, Reintentalo nuevamente.";
                     return false;
                 }
-                temp = oGym.TblTipoSalas.FirstOrDefault(x => x.Nombre.ToLower() == tblTipoSala.Nombre.ToLower() && x.Codigo != tblTipoSala.Codigo);
-                if (temp != null)
+
+                var duplicado = oGym.TblTipoSalas.FirstOrDefault(x => x.Nombre.ToLower() == tblTipoSala.Nombre.ToLower() && x.Codigo != tblTipoSala.Codigo);
+                if (duplicado != null)
                 {
                     message = "Ya existe un tipo de sala con el mismo nombre, Reintentalo nuevamente.";
                     return false;
                 }
-                oGym.TblTipoSalas.Update(tblTipoSala);
+
+                existente.Nombre = tblTipoSala.Nombre;
                 oGym.SaveChanges();
                 message = "Tipo de sala modificado correctamente.";
                 return true;

@@ -74,20 +74,24 @@ namespace apiGymnasio.Clases
                     message = "No se ha asignado un cargo para modificar";
                     return false;
                 }
-                var temp = oGym.TblCargos.FirstOrDefault(x => x.Codigo == tblCargo.Codigo);
-                if (temp == null)
+                var existente = oGym.TblCargos.FirstOrDefault(x => x.Codigo == tblCargo.Codigo);
+                if (existente == null)
                 {
                     message = "No se encontro el cargo a modificar";
                     return false;
                 }
-                temp = oGym.TblCargos.FirstOrDefault(x => x.Nombre.ToLower() == tblCargo.Nombre.ToLower() && x.Codigo != tblCargo.Codigo);
-                if(temp != null)
+
+                var duplicado = oGym.TblCargos.FirstOrDefault(x => x.Nombre.ToLower() == tblCargo.Nombre.ToLower() && x.Codigo != tblCargo.Codigo);
+                if (duplicado != null)
                 {
                     message = "El nombre del cargo no puede ser igual a uno existente";
                     return false;
                 }
 
-                oGym.TblCargos.Update(tblCargo);
+                // Actualizar solo las propiedades necesarias en la entidad ya rastreada por el contexto
+                existente.Nombre = tblCargo.Nombre;
+                existente.Activo = tblCargo.Activo;
+
                 oGym.SaveChanges();
                 message = "Cargo modificado correctamente";
                 return true;

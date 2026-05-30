@@ -73,19 +73,22 @@ namespace apiGymnasio.Clases
                     message = "No se ha asignado un tamaño para modificar";
                     return false;
                 }
-                var temp = oGym.TblTamanos.FirstOrDefault(x => x.Codigo == tblTamano.Codigo);
-                if (temp == null)
+                var existente = oGym.TblTamanos.FirstOrDefault(x => x.Codigo == tblTamano.Codigo);
+                if (existente == null)
                 {
                     message = "No se encontró el tamaño a modificar, Reintentalo nuevamente.";
                     return false;
                 }
-                temp = oGym.TblTamanos.FirstOrDefault(x => x.Nombre.ToLower() == tblTamano.Nombre.ToLower() && x.Codigo != tblTamano.Codigo);
-                if (temp != null)
+
+                var duplicado = oGym.TblTamanos.FirstOrDefault(x => x.Nombre.ToLower() == tblTamano.Nombre.ToLower() && x.Codigo != tblTamano.Codigo);
+                if (duplicado != null)
                 {
                     message = "Ya existe un tamaño con el mismo nombre, Reintentalo nuevamente.";
                     return false;
                 }
-                oGym.TblTamanos.Update(tblTamano);
+
+                existente.Nombre = tblTamano.Nombre;
+                existente.Activo = tblTamano.Activo;
                 oGym.SaveChanges();
                 message = "Tamaño modificado correctamente.";
                 return true;

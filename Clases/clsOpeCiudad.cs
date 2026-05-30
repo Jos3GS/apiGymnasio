@@ -73,19 +73,24 @@ namespace apiGymnasio.Clases
                     message = "No se ha asignado una ciudad para modificar";
                     return false;
                 }
-                var temp = oGym.TblCiudads.FirstOrDefault(x => x.Codigo == tblCiudad.Codigo);
-                if (temp == null)
+                var existente = oGym.TblCiudads.FirstOrDefault(x => x.Codigo == tblCiudad.Codigo);
+                if (existente == null)
                 {
                     message = "No se ha encontrado la ciudad para modificar, Reintentalo nuevamente.";
                     return false;
                 }
-                temp = oGym.TblCiudads.FirstOrDefault(x => x.Nombre.ToLower() == tblCiudad.Nombre.ToLower() && x.Codigo != tblCiudad.Codigo);
-                if (temp != null)
+
+                var duplicado = oGym.TblCiudads.FirstOrDefault(x => x.Nombre.ToLower() == tblCiudad.Nombre.ToLower() && x.Codigo != tblCiudad.Codigo);
+                if (duplicado != null)
                 {
                     message = "Ya existe una ciudad con el mismo nombre, Reintentalo nuevamente.";
                     return false;
                 }
-                oGym.TblCiudads.Update(tblCiudad);
+
+                // Actualizar propiedades en la entidad rastreada por el contexto
+                existente.Nombre = tblCiudad.Nombre;
+                existente.Activo = tblCiudad.Activo;
+
                 oGym.SaveChanges();
                 message = "Ciudad modificada correctamente.";
                 return true;

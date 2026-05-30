@@ -74,19 +74,21 @@ namespace apiGymnasio.Clases
                     message = "No se ha asignado un tipo de teléfono para modificar";
                     return false;
                 }
-                var temp = oGym.TblTipoTelefonos.FirstOrDefault(x => x.Codigo == tblTipoTelefono.Codigo);
-                if (temp == null)
+                var existente = oGym.TblTipoTelefonos.FirstOrDefault(x => x.Codigo == tblTipoTelefono.Codigo);
+                if (existente == null)
                 {
                     message = "No se encontró el tipo de teléfono a modificar, Reintentalo nuevamente.";
                     return false;
                 }
-                temp = oGym.TblTipoTelefonos.FirstOrDefault(x => x.Tipo.ToLower() == tblTipoTelefono.Tipo.ToLower() && x.Codigo != tblTipoTelefono.Codigo);
-                if (temp != null)
+
+                var duplicado = oGym.TblTipoTelefonos.FirstOrDefault(x => x.Tipo.ToLower() == tblTipoTelefono.Tipo.ToLower() && x.Codigo != tblTipoTelefono.Codigo);
+                if (duplicado != null)
                 {
                     message = "Ya existe un tipo de teléfono con el mismo nombre, Reintentalo nuevamente.";
                     return false;
                 }
-                oGym.TblTipoTelefonos.Update(tblTipoTelefono);
+
+                existente.Tipo = tblTipoTelefono.Tipo;
                 oGym.SaveChanges();
                 message = "Tipo de teléfono modificado correctamente.";
                 return true;
@@ -113,7 +115,7 @@ namespace apiGymnasio.Clases
                     message = "No se encontró el tipo de teléfono a eliminar, Reintentalo nuevamente.";
                     return false;
                 }
-                oGym.TblTipoTelefonos.Remove(tblTipoTelefono);
+                oGym.TblTipoTelefonos.Remove(temp);
                 oGym.SaveChanges();
                 message = "Tipo de teléfono eliminado correctamente.";
                 return true;

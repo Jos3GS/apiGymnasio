@@ -121,13 +121,22 @@ namespace apiGymnasio.Clases
                     message = "No se ha asignado una clase para modificar";
                     return false;
                 }
-                var temp = oGym.TblClases.FirstOrDefault(x => x.Codigo == tblClase.Codigo);
-                if (temp == null)
+                var existente = oGym.TblClases.FirstOrDefault(x => x.Codigo == tblClase.Codigo);
+                if (existente == null)
                 {
                     message = "No se encontró la clase a modificar, Reintentalo nuevamente.";
                     return false;
                 }
-                oGym.TblClases.Update(tblClase);
+
+                // Actualizar propiedades en la entidad rastreada por el contexto
+                existente.Nombre = tblClase.Nombre;
+                existente.Descripcion = tblClase.Descripcion;
+                existente.Horario = tblClase.Horario;
+                existente.Activo = tblClase.Activo;
+                existente.FkMonitor = tblClase.FkMonitor;
+                existente.FkSala = tblClase.FkSala;
+                existente.FkEspecialidad = tblClase.FkEspecialidad;
+
                 oGym.SaveChanges();
                 message = "Clase modificada correctamente.";
                 return true;
@@ -154,7 +163,7 @@ namespace apiGymnasio.Clases
                     message = "No se encontró la clase a eliminar, Reintentalo nuevamente.";
                     return false;
                 }
-                oGym.TblClases.Remove(tblClase);
+                oGym.TblClases.Remove(temp);
                 oGym.SaveChanges();
                 message = "Clase eliminada correctamente.";
                 return true;
