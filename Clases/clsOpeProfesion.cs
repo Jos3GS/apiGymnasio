@@ -18,6 +18,25 @@ namespace apiGymnasio.Clases
             return oGym.TblProfesions.OrderBy(x => x.Nombre).ToList();
         }
 
+        public TblProfesion? ListarProfesion(int codigo)
+        {
+            try
+            {
+                var temp = oGym.TblProfesions.FirstOrDefault(x => x.Codigo == codigo);
+                if (temp == null)
+                {
+                    message = "No se ha encontrado la profesión para el código ingresado, Reintentalo nuevamente.";
+                    return null;
+                }
+                return temp;
+            }
+            catch
+            {
+                message = "Error al listar la profesión, Reintentalo nuevamente.";
+                return null;
+            }
+        }
+
         public bool agregarProfesion()
         {
             try

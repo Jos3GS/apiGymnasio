@@ -18,6 +18,25 @@ namespace apiGymnasio.Clases
             return oGym.TblTipoSalas.OrderBy(x => x.Nombre).ToList();
         }
 
+        public TblTipoSala? ListarTipoSala(int codigo)
+        {
+            try
+            {
+                var temp = oGym.TblTipoSalas.FirstOrDefault(x => x.Codigo == codigo);
+                if (temp == null)
+                {
+                    message = "No se encontró el tipo de sala, Reintentalo nuevamente.";
+                    return null;
+                }
+                return temp;
+            }
+            catch
+            {
+                message = "Error al listar el tipo de sala, Reintentalo nuevamente.";
+                return null;
+            }
+        }
+
         public bool agregarTipoSala()
         {
             try

@@ -18,6 +18,25 @@ namespace apiGymnasio.Clases
             return oGym.TblTipoTelefonos.OrderBy(x => x.Tipo).ToList();
         }
 
+        public TblTipoTelefono? ListarTipoTelefono(int codigo)
+        {
+            try
+            {
+                var temp = oGym.TblTipoTelefonos.FirstOrDefault(x => x.Codigo == codigo);
+                if (temp == null)
+                {
+                    message = "No se ha encontrado el tipo de teléfono para el código ingresado, Reintentalo nuevamente.";
+                    return null;
+                }
+                return temp;
+            }
+            catch
+            {
+                message = "Error al listar el tipo de teléfono, Reintentalo nuevamente.";
+                return null;
+            }
+        }
+
         public bool agregarTipoTelefono()
         {
             try

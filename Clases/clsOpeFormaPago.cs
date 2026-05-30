@@ -18,6 +18,25 @@ namespace apiGymnasio.Clases
             return oGym.TblFormaPagos.OrderBy(x => x.Nombre).Where(x => x.Activo == true).ToList();
         }
 
+        public TblFormaPago? Listar(int codigo)
+        {
+            try
+            {
+                var temp = oGym.TblFormaPagos.FirstOrDefault(x => x.Codigo == codigo);
+                if (temp == null)
+                {
+                    message = "No se ha encontrado la forma de pago, Reintentalo nuevamente.";
+                    return null;
+                }
+                return temp;
+            }
+            catch
+            {
+                message = "Error al listar la forma de pago, Reintentalo nuevamente.";
+                return null;
+            }
+        }
+
         public bool agregarFormaPago()
         {
             try

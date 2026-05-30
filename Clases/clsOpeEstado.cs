@@ -18,6 +18,25 @@ namespace apiGymnasio.Clases
             return oGym.TblEstados.OrderBy(x => x.Nombre).Where(x => x.Activo == true).ToList();
         }
 
+        public TblEstado? ListarEstados(int codigo)
+        {
+            try
+            {
+                var temp = oGym.TblEstados.FirstOrDefault(x => x.Codigo == codigo);
+                if (temp == null)
+                {
+                    message = "No se ha encontrado el estado, Reintentalo nuevamente.";
+                    return null;
+                }
+                return temp;
+            }
+            catch
+            {
+                message = "Error al listar el estado, Reintentalo nuevamente.";
+                return null;
+            }
+        }
+
         public bool agregarEstado()
         {
             try

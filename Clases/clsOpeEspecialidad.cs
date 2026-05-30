@@ -18,6 +18,24 @@ namespace apiGymnasio.Clases
             return oGym.TblEspecialidads.OrderBy(x => x.Nombre).Where(x => x.Activo == true).ToList();
         }
 
+        public TblEspecialidad? ListarEspecialidades(int codigo)
+        {
+            try
+            {
+                var temp = oGym.TblEspecialidads.FirstOrDefault(x => x.Codigo == codigo);
+                if (temp == null) {
+                    message = "No se ha encontrado la especialidad para el código ingresado, Reintentalo nuevamente.";
+                    return null;
+                }
+                return temp;
+            }
+            catch
+            {
+                message = "Error al listar la especialidad, Reintentalo nuevamente.";
+                return null;
+            }
+        }
+
         public bool agregarEspecialidad()
         {
             try

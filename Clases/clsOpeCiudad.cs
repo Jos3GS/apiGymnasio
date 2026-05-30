@@ -18,6 +18,25 @@ namespace apiGymnasio.Clases
             return oGym.TblCiudads.OrderBy(x => x.Nombre).Where(x => x.Activo == true).ToList();
         }
 
+        public TblCiudad? ListarCiudades(int codigo)
+        {
+            try
+            {
+                var temp = oGym.TblCiudads.FirstOrDefault(x => x.Codigo == codigo);
+                if(temp == null)
+                {
+                    message = "No se ha encontrado la ciudad, Reintentalo nuevamente.";
+                    return null;
+                }
+                return temp;
+            }
+            catch 
+            {
+                message = "Error al listar la ciudad, Reintentalo nuevamente.";
+                return null;
+            }
+        }
+
         public bool agregarCiudad()
         {
             try

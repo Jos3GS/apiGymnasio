@@ -19,6 +19,25 @@ namespace apiGymnasio.Clases
             return oGym.TblMembresia.OrderBy(x => x.Nombre).Where(x => x.Activo == true).ToList();
         }
 
+        public TblMembresium? ListarMembresias(int codigo)
+        {
+            try
+            {
+                var temp = oGym.TblMembresia.FirstOrDefault(x => x.Codigo == codigo);
+                if (temp == null)
+                {
+                    message = "No se ha encontrado la membresía para el código ingresado, Reintentalo nuevamente.";
+                    return null;
+                }
+                return temp;
+            }
+            catch
+            {
+                message = "Error al listar la membresía, Reintentalo nuevamente.";
+                return null;
+            }
+        }
+
         public bool agregarMembresia()
         {
             try

@@ -17,6 +17,25 @@ namespace apiGymnasio.Clases
         {
             return oGym.TblCargos.OrderBy(x => x.Nombre).Where(x => x.Activo == true).ToList();
         }
+        public TblCargo? ListarCargos(int codigo)
+        {
+            try
+            {
+                var temp = oGym.TblCargos.FirstOrDefault(x => x.Codigo == codigo);
+                if (temp == null)
+                {
+                    message = "No se encontro el cargo solicitado";
+                    return null;
+                }
+                return temp;
+            }
+            catch 
+            {
+                message = "Error al listar el cargo, Reintentalo nuevamente.";
+                return null;
+            }
+            
+        }
 
         public bool agregarCargo()
         {

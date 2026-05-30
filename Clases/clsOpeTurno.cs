@@ -18,6 +18,25 @@ namespace apiGymnasio.Clases
             return oGym.TblTurnos.OrderBy(x => x.Nombre).Where(x => x.Activo == true).ToList();
         }
 
+        public TblTurno? ListarTurno(int codigo)
+        {
+            try
+            {
+                var temp = oGym.TblTurnos.FirstOrDefault(x => x.Codigo == codigo);
+                if (temp == null)
+                {
+                    message = "No se ha encontrado el turno, Reintentalo nuevamente.";
+                    return null;
+                }
+                return temp;
+            }
+            catch
+            {
+                message = "Error al listar el turno, Reintentalo nuevamente.";
+                return null;
+            }
+        }
+
         public bool agregarTurno()
         {
             try

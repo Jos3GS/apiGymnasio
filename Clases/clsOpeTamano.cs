@@ -18,6 +18,25 @@ namespace apiGymnasio.Clases
             return oGym.TblTamanos.OrderBy(x => x.Nombre).Where(x => x.Activo == true).ToList();
         }
 
+        public TblTamano? ListarTamano(int codigo)
+        {
+            try
+            {
+                var temp = oGym.TblTamanos.FirstOrDefault(x => x.Codigo == codigo);
+                if (temp == null)
+                {
+                    message = "No se ha encontrado el tamaño, Reintentalo nuevamente.";
+                    return null;
+                }
+                return temp;
+            }
+            catch
+            {
+                message = "Error al listar el tamaño, Reintentalo nuevamente.";
+                return null;
+            }
+        }
+
         public bool agregarTamano()
         {
             try

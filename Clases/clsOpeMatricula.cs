@@ -13,23 +13,87 @@ namespace apiGymnasio.Clases
             this.oGym = oGym;
         }
 
-        public int agregarMatricula()
+        public List<TblMatricula> listarMatriculas()
+        {
+            return oGym.TblMatriculas.OrderBy(x => x.FechaInicio).ToList();
+        }
+
+        public TblMatricula? listarMatriculas(int codigo)
+        {
+            return oGym.TblMatriculas.FirstOrDefault(x => x.Codigo == codigo);
+        }
+
+
+
+        public bool agregarMatricula()
         {
             try
             {
-                if(tblMatricula == null)
+                if (tblMatricula == null)
                 {
                     message = "No se proporcionó información de matrícula.";
-                    return -1;
+                    return false;
                 }
                 oGym.Add(tblMatricula);
                 oGym.SaveChanges();
-                return oGym.TblMatriculas.Max(x => x.Codigo);
+                return true;
             }
             catch
             {
                 message = "Error al agregar la matrícula. Reintentalo nuevamente.";
-                return -1;
+                return false;
+            }
+        }
+
+        public bool modificarMatricula()
+        {
+            try
+            {
+                if (tblMatricula == null)
+                {
+                    message = "No se proporcionó información de matrícula.";
+                    return false;
+                }
+                var temp = oGym.TblMatriculas.FirstOrDefault(x => x.Codigo == tblMatricula.Codigo);
+                if (temp == null)
+                {
+                    message = "No se encontró la matrícula a modificar.";
+                    return false;
+                }
+                oGym.Update(tblMatricula);
+                oGym.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                message = "Error al modificar la matrícula. Reintentalo nuevamente.";
+                return false;
+            }
+        }
+
+        public bool eliminarMatricula()
+        {
+            try
+            {
+                if (tblMatricula == null)
+                {
+                    message = "No se proporcionó información de matrícula.";
+                    return false;
+                }
+                var temp = oGym.TblMatriculas.FirstOrDefault(x => x.Codigo == tblMatricula.Codigo);
+                if (temp == null)
+                {
+                    message = "No se encontró la matrícula a eliminar.";
+                    return false;
+                }
+                oGym.Remove(tblMatricula);
+                oGym.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                message = "Error al eliminar la matrícula. Reintentalo nuevamente.";
+                return false;
             }
         }
     }

@@ -18,6 +18,25 @@ namespace apiGymnasio.Clases
             return oGym.TblEstadoConservacions.OrderBy(x => x.Nombre).Where(x => x.Activo == true).ToList();
         }
 
+        public TblEstadoConservacion? ListarEstadoConservacion(int codigo)
+        {
+            try
+            {
+                var temp = oGym.TblEstadoConservacions.FirstOrDefault(x => x.Codigo == codigo);
+                if (temp == null)
+                {
+                    message = "No se ha encontrado el estado de conservación, Reintentalo nuevamente.";
+                    return null;
+                }
+                return temp;
+            }
+            catch
+            {
+                message = "Error al listar el estado de conservación, Reintentalo nuevamente.";
+                return null;
+            }
+        }
+
         public bool agregarEstadoConservacion()
         {
             try

@@ -18,6 +18,25 @@ namespace apiGymnasio.Clases
             return oGym.TblMarcas.OrderBy(x => x.Nombre).ToList();
         }
 
+        public TblMarca? ListarMarcas(int codigo)
+        {
+            try
+            {
+                var temp = oGym.TblMarcas.FirstOrDefault(x => x.Codigo == codigo);
+                if (temp == null)
+                {
+                    message = "No se ha encontrado la marca para el código ingresado, Reintentalo nuevamente.";
+                    return null;
+                }
+                return temp;
+            }
+            catch
+            {
+                message = "Error al listar la marca, Reintentalo nuevamente.";
+                return null;
+            }
+        }
+
         public bool agregarMarca()
         {
             try
