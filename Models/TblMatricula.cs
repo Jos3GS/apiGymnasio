@@ -20,4 +20,5 @@ public partial class TblMatricula
     public int? FkSocio { get; set; }
 
     public int? FkFormaPago { get; set; }
+
 }

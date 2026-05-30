@@ -16,4 +16,5 @@ public partial class TblSala
     public int? FkTamano { get; set; }
 
     public int? FkTipoSala { get; set; }
+
 }

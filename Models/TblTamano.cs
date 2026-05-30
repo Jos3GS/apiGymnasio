@@ -12,5 +12,4 @@ public partial class TblTamano
     public int Espacio { get; set; }
 
     public bool? Activo { get; set; }
-
 }

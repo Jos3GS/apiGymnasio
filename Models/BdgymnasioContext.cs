@@ -73,15 +73,15 @@ public partial class BdgymnasioContext : DbContext
 
     public virtual DbSet<TblUsuario> TblUsuarios { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB; Database=BDGymnasio; Trusted_Connection=SSPI; MultipleActiveResultSets=true; Trust Server Certificate=true");
+//    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+//        => optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB; Database=BDGymnasio; Trusted_Connection=SSPI; MultipleActiveResultSets=true; Trust Server Certificate=true");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<TblCargo>(entity =>
         {
-            entity.HasKey(e => e.Codigo).HasName("PK__tblCargo__40F9A2078A4C9778");
+            entity.HasKey(e => e.Codigo).HasName("PK__tblCargo__40F9A2079C56BBBA");
 
             entity.ToTable("tblCargo");
 
@@ -97,7 +97,7 @@ public partial class BdgymnasioContext : DbContext
 
         modelBuilder.Entity<TblCiudad>(entity =>
         {
-            entity.HasKey(e => e.Codigo).HasName("PK__tblCiuda__40F9A207D2BA32F4");
+            entity.HasKey(e => e.Codigo).HasName("PK__tblCiuda__40F9A207D504D2B8");
 
             entity.ToTable("tblCiudad");
 
@@ -113,7 +113,7 @@ public partial class BdgymnasioContext : DbContext
 
         modelBuilder.Entity<TblClase>(entity =>
         {
-            entity.HasKey(e => e.Codigo).HasName("PK__tblClase__40F9A20728A5B271");
+            entity.HasKey(e => e.Codigo).HasName("PK__tblClase__40F9A2075932E14A");
 
             entity.ToTable("tblClase");
 
@@ -143,11 +143,12 @@ public partial class BdgymnasioContext : DbContext
 
         modelBuilder.Entity<TblDetalleMatricula>(entity =>
         {
-            entity.HasKey(e => e.Codigo).HasName("PK__tblDetal__40F9A207739E6BFB");
+            entity.HasKey(e => e.Codigo).HasName("PK__tblDetal__40F9A20700D60C3A");
 
             entity.ToTable("tblDetalleMatricula");
 
             entity.Property(e => e.Codigo).HasColumnName("codigo");
+            entity.Property(e => e.FechaMatricula).HasColumnName("fechaMatricula");
             entity.Property(e => e.FkClase).HasColumnName("FK_clase");
             entity.Property(e => e.FkMatricula).HasColumnName("FK_matricula");
 
@@ -156,7 +157,7 @@ public partial class BdgymnasioContext : DbContext
 
         modelBuilder.Entity<TblDireccionEmpleado>(entity =>
         {
-            entity.HasKey(e => e.Codigo).HasName("PK__tblDirec__40F9A2070C735666");
+            entity.HasKey(e => e.Codigo).HasName("PK__tblDirec__40F9A20728D0244E");
 
             entity.ToTable("tblDireccionEmpleado");
 
@@ -171,12 +172,12 @@ public partial class BdgymnasioContext : DbContext
             entity.Property(e => e.FkCiudad).HasColumnName("FK_ciudad");
             entity.Property(e => e.FkEmpleado).HasColumnName("FK_empleado");
 
-            
+           
         });
 
         modelBuilder.Entity<TblDireccionSocio>(entity =>
         {
-            entity.HasKey(e => e.Codigo).HasName("PK__tblDirec__40F9A2073DB009B9");
+            entity.HasKey(e => e.Codigo).HasName("PK__tblDirec__40F9A2079C9E736B");
 
             entity.ToTable("tblDireccionSocio");
 
@@ -196,7 +197,7 @@ public partial class BdgymnasioContext : DbContext
 
         modelBuilder.Entity<TblEmpleado>(entity =>
         {
-            entity.HasKey(e => e.NumeroId).HasName("PK__tblEmple__405E79FE3470A4EF");
+            entity.HasKey(e => e.NumeroId).HasName("PK__tblEmple__405E79FEE1EA01B3");
 
             entity.ToTable("tblEmpleado");
 
@@ -224,7 +225,7 @@ public partial class BdgymnasioContext : DbContext
 
         modelBuilder.Entity<TblEspecialidad>(entity =>
         {
-            entity.HasKey(e => e.Codigo).HasName("PK__tblEspec__40F9A207B9E74FAE");
+            entity.HasKey(e => e.Codigo).HasName("PK__tblEspec__40F9A207AAC04EC0");
 
             entity.ToTable("tblEspecialidad");
 
@@ -241,7 +242,7 @@ public partial class BdgymnasioContext : DbContext
 
         modelBuilder.Entity<TblEstado>(entity =>
         {
-            entity.HasKey(e => e.Codigo).HasName("PK__tblEstad__40F9A207C78BFF01");
+            entity.HasKey(e => e.Codigo).HasName("PK__tblEstad__40F9A207DFEAEB66");
 
             entity.ToTable("tblEstado");
 
@@ -257,7 +258,7 @@ public partial class BdgymnasioContext : DbContext
 
         modelBuilder.Entity<TblEstadoConservacion>(entity =>
         {
-            entity.HasKey(e => e.Codigo).HasName("PK__tblEstad__40F9A207FDF84627");
+            entity.HasKey(e => e.Codigo).HasName("PK__tblEstad__40F9A2077DA553FC");
 
             entity.ToTable("tblEstadoConservacion");
 
@@ -273,7 +274,7 @@ public partial class BdgymnasioContext : DbContext
 
         modelBuilder.Entity<TblFormaPago>(entity =>
         {
-            entity.HasKey(e => e.Codigo).HasName("PK__tblForma__40F9A2072750AE7F");
+            entity.HasKey(e => e.Codigo).HasName("PK__tblForma__40F9A207146314AC");
 
             entity.ToTable("tblFormaPago");
 
@@ -289,7 +290,7 @@ public partial class BdgymnasioContext : DbContext
 
         modelBuilder.Entity<TblMarca>(entity =>
         {
-            entity.HasKey(e => e.Codigo).HasName("PK__tblMarca__40F9A2078D2C4BFF");
+            entity.HasKey(e => e.Codigo).HasName("PK__tblMarca__40F9A207F70304CE");
 
             entity.ToTable("tblMarca");
 
@@ -306,7 +307,7 @@ public partial class BdgymnasioContext : DbContext
 
         modelBuilder.Entity<TblMatricula>(entity =>
         {
-            entity.HasKey(e => e.Codigo).HasName("PK__tblMatri__40F9A207119212D9");
+            entity.HasKey(e => e.Codigo).HasName("PK__tblMatri__40F9A2075D32E1AE");
 
             entity.ToTable("tblMatricula");
 
@@ -326,7 +327,7 @@ public partial class BdgymnasioContext : DbContext
 
         modelBuilder.Entity<TblMembresium>(entity =>
         {
-            entity.HasKey(e => e.Codigo).HasName("PK__tblMembr__40F9A2074F5E9BA7");
+            entity.HasKey(e => e.Codigo).HasName("PK__tblMembr__40F9A20739F2CDEF");
 
             entity.ToTable("tblMembresia");
 
@@ -342,7 +343,7 @@ public partial class BdgymnasioContext : DbContext
 
         modelBuilder.Entity<TblMonitor>(entity =>
         {
-            entity.HasKey(e => e.NumeroId).HasName("PK__tblMonit__405E79FECD813CB3");
+            entity.HasKey(e => e.NumeroId).HasName("PK__tblMonit__405E79FE58FF38A7");
 
             entity.ToTable("tblMonitor");
 
@@ -364,7 +365,7 @@ public partial class BdgymnasioContext : DbContext
 
         modelBuilder.Entity<TblProfesion>(entity =>
         {
-            entity.HasKey(e => e.Codigo).HasName("PK__tblProfe__40F9A2073F443FC5");
+            entity.HasKey(e => e.Codigo).HasName("PK__tblProfe__40F9A207C3AFF5B2");
 
             entity.ToTable("tblProfesion");
 
@@ -377,7 +378,7 @@ public partial class BdgymnasioContext : DbContext
 
         modelBuilder.Entity<TblRecurso>(entity =>
         {
-            entity.HasKey(e => e.Codigo).HasName("PK__tblRecur__40F9A2071BDAA1C5");
+            entity.HasKey(e => e.Codigo).HasName("PK__tblRecur__40F9A207B70FF902");
 
             entity.ToTable("tblRecurso");
 
@@ -400,7 +401,7 @@ public partial class BdgymnasioContext : DbContext
 
         modelBuilder.Entity<TblSala>(entity =>
         {
-            entity.HasKey(e => e.Numero).HasName("PK__tblSala__FC77F210C4EAAB0E");
+            entity.HasKey(e => e.Numero).HasName("PK__tblSala__FC77F210B0A07EF5");
 
             entity.ToTable("tblSala");
 
@@ -421,7 +422,7 @@ public partial class BdgymnasioContext : DbContext
 
         modelBuilder.Entity<TblSocio>(entity =>
         {
-            entity.HasKey(e => e.NumeroId).HasName("PK__tblSocio__405E79FEC20835F6");
+            entity.HasKey(e => e.NumeroId).HasName("PK__tblSocio__405E79FED3E9C6F0");
 
             entity.ToTable("tblSocio");
 
@@ -453,7 +454,7 @@ public partial class BdgymnasioContext : DbContext
 
         modelBuilder.Entity<TblTamano>(entity =>
         {
-            entity.HasKey(e => e.Codigo).HasName("PK__tblTaman__40F9A207DE2B8E59");
+            entity.HasKey(e => e.Codigo).HasName("PK__tblTaman__40F9A207B1E3E274");
 
             entity.ToTable("tblTamano");
 
@@ -470,7 +471,7 @@ public partial class BdgymnasioContext : DbContext
 
         modelBuilder.Entity<TblTelEmpleadoEmpleado>(entity =>
         {
-            entity.HasKey(e => e.Codigo).HasName("PK__tblTelEm__40F9A2079AD205A2");
+            entity.HasKey(e => e.Codigo).HasName("PK__tblTelEm__40F9A207A0EA3FD0");
 
             entity.ToTable("tblTelEmpleado_Empleado");
 
@@ -483,7 +484,7 @@ public partial class BdgymnasioContext : DbContext
 
         modelBuilder.Entity<TblTelSocioSocio>(entity =>
         {
-            entity.HasKey(e => e.Codigo).HasName("PK__tblTelSo__40F9A20738EF2B4D");
+            entity.HasKey(e => e.Codigo).HasName("PK__tblTelSo__40F9A20773624FB9");
 
             entity.ToTable("tblTelSocio_Socio");
 
@@ -491,12 +492,12 @@ public partial class BdgymnasioContext : DbContext
             entity.Property(e => e.FkSocio).HasColumnName("FK_socio");
             entity.Property(e => e.FkTelefonoSocio).HasColumnName("FK_telefonoSocio");
 
-          
+           
         });
 
         modelBuilder.Entity<TblTelefonoEmpleado>(entity =>
         {
-            entity.HasKey(e => e.Codigo).HasName("PK__tblTelef__40F9A207E02A3BF4");
+            entity.HasKey(e => e.Codigo).HasName("PK__tblTelef__40F9A207D2ECBE7F");
 
             entity.ToTable("tblTelefonoEmpleado");
 
@@ -515,7 +516,7 @@ public partial class BdgymnasioContext : DbContext
 
         modelBuilder.Entity<TblTelefonoSocio>(entity =>
         {
-            entity.HasKey(e => e.Codigo).HasName("PK__tblTelef__40F9A2072BF13419");
+            entity.HasKey(e => e.Codigo).HasName("PK__tblTelef__40F9A2073D9EDAFE");
 
             entity.ToTable("tblTelefonoSocio");
 
@@ -534,7 +535,7 @@ public partial class BdgymnasioContext : DbContext
 
         modelBuilder.Entity<TblTipoDocumento>(entity =>
         {
-            entity.HasKey(e => e.Codigo).HasName("PK__tblTipoD__40F9A2076985C979");
+            entity.HasKey(e => e.Codigo).HasName("PK__tblTipoD__40F9A207E3721610");
 
             entity.ToTable("tblTipoDocumento");
 
@@ -550,7 +551,7 @@ public partial class BdgymnasioContext : DbContext
 
         modelBuilder.Entity<TblTipoSala>(entity =>
         {
-            entity.HasKey(e => e.Codigo).HasName("PK__tblTipoS__40F9A2078C9E4A89");
+            entity.HasKey(e => e.Codigo).HasName("PK__tblTipoS__40F9A2070BC0A92C");
 
             entity.ToTable("tblTipoSala");
 
@@ -567,7 +568,7 @@ public partial class BdgymnasioContext : DbContext
 
         modelBuilder.Entity<TblTipoTelefono>(entity =>
         {
-            entity.HasKey(e => e.Codigo).HasName("PK__tblTipoT__40F9A2070F5E1F64");
+            entity.HasKey(e => e.Codigo).HasName("PK__tblTipoT__40F9A207711C874B");
 
             entity.ToTable("tblTipoTelefono");
 
@@ -583,7 +584,7 @@ public partial class BdgymnasioContext : DbContext
 
         modelBuilder.Entity<TblTurno>(entity =>
         {
-            entity.HasKey(e => e.Codigo).HasName("PK__tblTurno__40F9A2077923AAD7");
+            entity.HasKey(e => e.Codigo).HasName("PK__tblTurno__40F9A2070AA83327");
 
             entity.ToTable("tblTurno");
 
@@ -601,7 +602,7 @@ public partial class BdgymnasioContext : DbContext
 
         modelBuilder.Entity<TblUsuario>(entity =>
         {
-            entity.HasKey(e => e.Codigo).HasName("PK__tblUsuar__40F9A20770790E1C");
+            entity.HasKey(e => e.Codigo).HasName("PK__tblUsuar__40F9A2073224EAC7");
 
             entity.ToTable("tblUsuario");
 

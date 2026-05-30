@@ -12,4 +12,5 @@ public partial class TblUsuario
     public string Contrasena { get; set; } = null!;
 
     public bool? Activo { get; set; }
+
 }

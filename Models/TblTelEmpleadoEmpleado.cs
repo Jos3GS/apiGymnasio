@@ -10,5 +10,4 @@ public partial class TblTelEmpleadoEmpleado
     public int? FkTelefonoEmpleado { get; set; }
 
     public int? FkEmpleado { get; set; }
-
 }

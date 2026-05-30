@@ -26,4 +26,5 @@ public partial class TblSocio
     public int? FkEstado { get; set; }
 
     public int? FkMembresia { get; set; }
+
 }

@@ -14,5 +14,4 @@ public partial class TblDireccionSocio
     public int? FkSocio { get; set; }
 
     public int? FkCiudad { get; set; }
-
 }

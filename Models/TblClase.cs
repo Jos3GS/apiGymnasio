@@ -22,5 +22,4 @@ public partial class TblClase
     public int? FkSala { get; set; }
 
     public int? FkEspecialidad { get; set; }
-
 }

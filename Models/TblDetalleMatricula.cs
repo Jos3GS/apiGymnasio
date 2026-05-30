@@ -7,7 +7,8 @@ public partial class TblDetalleMatricula
 {
     public int Codigo { get; set; }
 
+    public DateOnly FechaMatricula { get; set; }
+
     public int? FkClase { get; set; }
 
     public int? FkMatricula { get; set; }
-}
