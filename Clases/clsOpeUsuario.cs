@@ -25,6 +25,25 @@ namespace apiGymnasio.Clases
                .ToList();
         }
 
+        public TblUsuario? ListarUsuarios(int codigo)
+        {
+            try
+            {
+                var temp = oGym.TblUsuarios.FirstOrDefault(x => x.Codigo == codigo);
+                if (temp == null)
+                {
+                    message = "No se ha encontrado el usuario, Reintentalo nuevamente.";
+                    return null;
+                }
+                return temp;
+            }
+            catch
+            {
+                message = "Error al listar el usuario, Reintentalo nuevamente.";
+                return null;
+            }
+        }
+
         public TblUsuario? IniciarSesion(string nombreUsuario, string clave)
         {
             return oGym.TblUsuarios.FirstOrDefault(x => x.Usuario == nombreUsuario && x.Contrasena == clave);

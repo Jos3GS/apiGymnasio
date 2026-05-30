@@ -1,0 +1,56 @@
+### Crear monitor (POST)
+POST http://localhost:5235/api/monitor
+Content-Type: application/json
+
+{
+  "empleado": {
+    "NumeroId": 12345,
+    "Salario": 500.0,
+    "Nombre": "Juan",
+    "Apellidos": "Perez",
+    "UsuarioCrea": 1,
+    "FkTipoDocumento": 1,
+    "FkUsuario": null,
+    "FkCargo": null,
+    "FkTurno": null,
+    "FkEspecialidad": null
+  },
+  "monitor": {
+    "NumeroId": 12345,
+    "Experiencia": "5 años",
+    "Titulacion": "Lic. Educación Física",
+    "FkEspecialidad": null
+  }
+}
+
+### Modificar monitor (PUT)
+PUT http://localhost:5235/api/monitor/12345
+Content-Type: application/json
+
+{
+  "empleado": {
+    "NumeroId": 12345,
+    "Salario": 550.0,
+    "Nombre": "Juan",
+    "Apellidos": "Perez",
+    "UsuarioCrea": 1,
+    "FkTipoDocumento": 1,
+    "FkUsuario": null,
+    "FkCargo": null,
+    "FkTurno": null,
+    "FkEspecialidad": null
+  },
+  "monitor": {
+    "NumeroId": 12345,
+    "Experiencia": "6 años",
+    "Titulacion": "Lic. Educación Física",
+    "FkEspecialidad": null
+  }
+}
+
+### Eliminar monitor (DELETE)
+DELETE http://localhost:5235/api/monitor/12345
+
+### Obtener monitor (GET)
+GET http://localhost:5235/api/monitor/12345
+
