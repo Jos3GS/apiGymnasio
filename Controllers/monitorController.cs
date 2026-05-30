@@ -18,21 +18,25 @@ namespace apiGymnasio.Controllers
         }
 
         [HttpGet]
-        public ActionResult Get()
+        public object Get()
         {
-            return Ok(_op.listarMonitores());
+            return _op.listarMonitores();
         }
 
         [HttpGet("{id}")]
-        public ActionResult Get(int id)
+        public object Get(int id)
         {
             var res = _op.listarMonitores(id);
-            if (res == null) return NotFound(_op.message);
-            return Ok(res);
+            if (res == null)
+            {
+                Response.StatusCode = 404;
+                return new { message = _op.message };
+            }
+            return res;
         }
 
         [HttpPost]
-        public ActionResult Post([FromBody] dynamic payload)
+        public object Post([FromBody] dynamic payload)
         {
             // payload expected: { empleado: {...}, monitor: {...} }
             try
@@ -40,51 +44,75 @@ namespace apiGymnasio.Controllers
                 var empleado = System.Text.Json.JsonSerializer.Deserialize<TblEmpleado>(payload.GetProperty("empleado").ToString());
                 var monitor = System.Text.Json.JsonSerializer.Deserialize<TblMonitor>(payload.GetProperty("monitor").ToString());
                 _op.tblMonitor = monitor;
-                if (!_op.agregarMonitor(empleado)) return BadRequest(_op.message);
+                if (!_op.agregarMonitor(empleado))
+                {
+                    Response.StatusCode = 400;
+                    return new { message = _op.message };
+                }
                 // Return both empleado and monitor in response body
                 var response = new { empleado = empleado, monitor = monitor };
-                return CreatedAtAction(nameof(Get), new { id = monitor.NumeroId }, response);
+                Response.StatusCode = 201;
+                return response;
             }
             catch
             {
-                return BadRequest("Payload inválido");
+                Response.StatusCode = 400;
+                return new { message = "Payload inválido" };
             }
         }
 
         [HttpPut("{id}")]
-        public ActionResult Put(int id, [FromBody] dynamic payload)
+        public object Put(int id, [FromBody] dynamic payload)
         {
             try
             {
                 var empleado = System.Text.Json.JsonSerializer.Deserialize<TblEmpleado>(payload.GetProperty("empleado").ToString());
                 var monitor = System.Text.Json.JsonSerializer.Deserialize<TblMonitor>(payload.GetProperty("monitor").ToString());
-                if (monitor == null || empleado == null || monitor.NumeroId != id || empleado.NumeroId != id) return BadRequest("Id inválido");
+                if (monitor == null || empleado == null || monitor.NumeroId != id || empleado.NumeroId != id)
+                {
+                    Response.StatusCode = 400;
+                    return new { message = "Id inválido" };
+                }
                 _op.tblMonitor = monitor;
-                if (!_op.modificarMonitor(empleado)) return BadRequest(_op.message);
+                if (!_op.modificarMonitor(empleado))
+                {
+                    Response.StatusCode = 400;
+                    return new { message = _op.message };
+                }
                 var response = new { empleado = empleado, monitor = monitor };
-                return Ok(response);
+                return response;
             }
             catch
             {
-                return BadRequest("Payload inválido");
+                Response.StatusCode = 400;
+                return new { message = "Payload inválido" };
             }
         }
 
         [HttpDelete("{id}")]
-        public ActionResult Delete(int id)
+        public object Delete(int id)
         {
             try
             {
                 var empleado = _context.TblEmpleados.FirstOrDefault(x => x.NumeroId == id);
                 var monitor = _context.TblMonitors.FirstOrDefault(x => x.NumeroId == id);
-                if (monitor == null) return NotFound("Monitor no encontrado");
+                if (monitor == null)
+                {
+                    Response.StatusCode = 404;
+                    return new { message = "Monitor no encontrado" };
+                }
                 _op.tblMonitor = monitor;
-                if (!_op.borrarMonitor(empleado)) return BadRequest(_op.message);
-                return Ok(_op.message);
+                if (!_op.borrarMonitor(empleado))
+                {
+                    Response.StatusCode = 400;
+                    return new { message = _op.message };
+                }
+                return new { message = _op.message };
             }
             catch
             {
-                return BadRequest("Error al eliminar");
+                Response.StatusCode = 400;
+                return new { message = "Error al eliminar" };
             }
         }
     }

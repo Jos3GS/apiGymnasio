@@ -18,56 +18,82 @@ namespace apiGymnasio.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<TblUsuario>> Get() => Ok(_op.ListarUsuarios());
+        public List<TblUsuario> Get() => _op.ListarUsuarios();
 
         [HttpGet("{id}")]
-        public ActionResult<TblUsuario> Get(int id)
+        public object Get(int id)
         {
             var res = _op.ListarUsuarios(id);
-            if (res == null) return NotFound(_op.message);
-            return Ok(res);
+            if (res == null)
+            {
+                Response.StatusCode = 404;
+                return new { message = _op.message };
+            }
+            return res;
         }
 
         [HttpPost]
-        public ActionResult Post([FromBody] TblUsuario obj)
+        public object Post([FromBody] TblUsuario obj)
         {
             _op.tblUsuario = obj;
-            if (!_op.agregarUsuario()) return BadRequest(_op.message);
-            return CreatedAtAction(nameof(Get), new { id = obj.Codigo }, obj);
+            if (!_op.agregarUsuario())
+            {
+                Response.StatusCode = 400;
+                return new { message = _op.message };
+            }
+            Response.StatusCode = 201;
+            return obj;
         }
 
         [HttpPost("login")]
-        public ActionResult Login([FromBody] dynamic cred)
+        public object Login([FromBody] dynamic cred)
         {
             try
             {
                 string usuario = cred.GetProperty("usuario").ToString();
                 string clave = cred.GetProperty("clave").ToString();
                 var res = _op.IniciarSesion(usuario, clave);
-                if (res == null) return Unauthorized("Credenciales inválidas");
-                return Ok(res);
+                if (res == null)
+                {
+                    Response.StatusCode = 401;
+                    return new { message = "Credenciales inválidas" };
+                }
+                return res;
             }
             catch
             {
-                return BadRequest("Payload inválido");
+                Response.StatusCode = 400;
+                return new { message = "Payload inválido" };
             }
         }
 
         [HttpPut("{id}")]
-        public ActionResult Put(int id, [FromBody] TblUsuario obj)
+        public object Put(int id, [FromBody] TblUsuario obj)
         {
-            if (obj == null || id != obj.Codigo) return BadRequest("Id inválido");
+            if (obj == null || id != obj.Codigo)
+            {
+                Response.StatusCode = 400;
+                return new { message = "Id inválido" };
+            }
             _op.tblUsuario = obj;
-            if (!_op.modificarUsuario()) return BadRequest(_op.message);
-            return Ok(_op.message);
+            if (!_op.modificarUsuario())
+            {
+                Response.StatusCode = 400;
+                return new { message = _op.message };
+            }
+            return new { message = _op.message };
         }
 
         [HttpDelete("{id}")]
-        public ActionResult Delete(int id)
+        public object Delete(int id)
         {
             _op.tblUsuario = new TblUsuario { Codigo = id };
-            if (!_op.eliminarUsuario()) return BadRequest(_op.message);
-            return Ok(_op.message);
+            if (!_op.eliminarUsuario())
+            {
+                Response.StatusCode = 400;
+                return new { message = _op.message };
+            }
+            return new { message = _op.message };
         }
     }
 }

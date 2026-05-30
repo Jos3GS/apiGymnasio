@@ -18,71 +18,108 @@ namespace apiGymnasio.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<TblEmpleado>> Get() => Ok(_op.ListarEmpleados());
+        public List<TblEmpleado> Get() => _op.ListarEmpleados();
 
         [HttpGet("cargo/{id}")]
-        public ActionResult<List<TblEmpleado>> GetByCargo(int id)
+        public object GetByCargo(int id)
         {
             var res = _op.buscarEmpleadosXCargo(id);
-            if (res == null) return NotFound(_op.message);
-            return Ok(res);
+            if (res == null)
+            {
+                Response.StatusCode = 404;
+                return new { message = _op.message };
+            }
+            return res;
         }
 
         [HttpGet("turno/{id}")]
-        public ActionResult<List<TblEmpleado>> GetByTurno(int id)
+        public object GetByTurno(int id)
         {
             var res = _op.buscarEmpleadoXTurno(id);
-            if (res == null) return NotFound(_op.message);
-            return Ok(res);
+            if (res == null)
+            {
+                Response.StatusCode = 404;
+                return new { message = _op.message };
+            }
+            return res;
         }
 
         [HttpGet("especialidad/{id}")]
-        public ActionResult<List<TblEmpleado>> GetByEspecialidad(int id)
+        public object GetByEspecialidad(int id)
         {
             var res = _op.buscarEmpleadoXEspecialidad(id);
-            if (res == null) return NotFound(_op.message);
-            return Ok(res);
+            if (res == null)
+            {
+                Response.StatusCode = 404;
+                return new { message = _op.message };
+            }
+            return res;
         }
 
         [HttpGet("usuario/{id}")]
-        public ActionResult<TblEmpleado> GetByUsuario(int id)
+        public object GetByUsuario(int id)
         {
             var res = _op.buscarEmpleadoXUsuario(id);
-            if (res == null) return NotFound(_op.message);
-            return Ok(res);
+            if (res == null)
+            {
+                Response.StatusCode = 404;
+                return new { message = _op.message };
+            }
+            return res;
         }
 
         [HttpGet("{id}")]
-        public ActionResult<TblEmpleado> Get(int id)
+        public object Get(int id)
         {
             var res = _op.buscarEmpleadoXNumeroId(id);
-            if (res == null) return NotFound(_op.message);
-            return Ok(res);
+            if (res == null)
+            {
+                Response.StatusCode = 404;
+                return new { message = _op.message };
+            }
+            return res;
         }
 
         [HttpPost]
-        public ActionResult Post([FromBody] TblEmpleado empleado)
+        public object Post([FromBody] TblEmpleado empleado)
         {
             _op.tblEmpleado = empleado;
-            if (!_op.agregarEmpleado()) return BadRequest(_op.message);
-            return CreatedAtAction(nameof(Get), new { id = empleado.NumeroId }, empleado);
+            if (!_op.agregarEmpleado())
+            {
+                Response.StatusCode = 400;
+                return new { message = _op.message };
+            }
+            Response.StatusCode = 201;
+            return empleado;
         }
 
         [HttpPut("{id}")]
-        public ActionResult Put(int id, [FromBody] TblEmpleado empleado)
+        public object Put(int id, [FromBody] TblEmpleado empleado)
         {
-            if (empleado == null || id != empleado.NumeroId) return BadRequest("Id inválido");
+            if (empleado == null || id != empleado.NumeroId)
+            {
+                Response.StatusCode = 400;
+                return new { message = "Id inválido" };
+            }
             _op.tblEmpleado = empleado;
-            if (!_op.modificarEmpleado()) return BadRequest(_op.message);
-            return Ok(_op.message);
+            if (!_op.modificarEmpleado())
+            {
+                Response.StatusCode = 400;
+                return new { message = _op.message };
+            }
+            return new { message = _op.message };
         }
 
         [HttpDelete("{id}")]
-        public ActionResult Delete(int id)
+        public object Delete(int id)
         {
             _op.tblEmpleado = new TblEmpleado { NumeroId = id };
-            if (!_op.borrarEmpleado()) return BadRequest(_op.message);
-            return Ok(_op.message);
+            if (!_op.borrarEmpleado())
+            {
+                Response.StatusCode = 400;
+                return new { message = _op.message };
+            }
+            return new { message = _op.message };
         }
     }
 }

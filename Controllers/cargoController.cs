@@ -18,39 +18,60 @@ namespace apiGymnasio.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<TblCargo>> Get() => Ok(_op.ListarCargos());
+        public List<TblCargo> Get() => _op.ListarCargos();
 
         [HttpGet("{id}")]
-        public ActionResult<TblCargo> Get(int id)
+        public object Get(int id)
         {
             var res = _op.ListarCargos(id);
-            if (res == null) return NotFound(_op.message);
-            return Ok(res);
+            if (res == null)
+            {
+                Response.StatusCode = 404;
+                return new { message = _op.message };
+            }
+            return res;
         }
 
         [HttpPost]
-        public ActionResult Post([FromBody] TblCargo cargo)
+        public object Post([FromBody] TblCargo cargo)
         {
             _op.tblCargo = cargo;
-            if (!_op.agregarCargo()) return BadRequest(_op.message);
-            return CreatedAtAction(nameof(Get), new { id = cargo.Codigo }, cargo);
+            if (!_op.agregarCargo())
+            {
+                Response.StatusCode = 400;
+                return new { message = _op.message };
+            }
+            Response.StatusCode = 201;
+            return cargo;
         }
 
         [HttpPut("{id}")]
-        public ActionResult Put(int id, [FromBody] TblCargo cargo)
+        public object Put(int id, [FromBody] TblCargo cargo)
         {
-            if (cargo == null || id != cargo.Codigo) return BadRequest("Id inválido");
+            if (cargo == null || id != cargo.Codigo)
+            {
+                Response.StatusCode = 400;
+                return new { message = "Id inválido" };
+            }
             _op.tblCargo = cargo;
-            if (!_op.modificarCargo()) return BadRequest(_op.message);
-            return Ok(_op.message);
+            if (!_op.modificarCargo())
+            {
+                Response.StatusCode = 400;
+                return new { message = _op.message };
+            }
+            return new { message = _op.message };
         }
 
         [HttpDelete("{id}")]
-        public ActionResult Delete(int id)
+        public object Delete(int id)
         {
             _op.tblCargo = new TblCargo { Codigo = id };
-            if (!_op.borrarCargo()) return BadRequest(_op.message);
-            return Ok(_op.message);
+            if (!_op.borrarCargo())
+            {
+                Response.StatusCode = 400;
+                return new { message = _op.message };
+            }
+            return new { message = _op.message };
         }
     }
 }

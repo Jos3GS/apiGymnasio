@@ -4,7 +4,6 @@ using apiGymnasio.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
-// Swagger / OpenAPI
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -23,13 +22,11 @@ builder.Services.AddCors(opciones => {
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
     app.UseSwagger();
     app.UseSwaggerUI();
-    // Swagger middleware enabled
 }
 
 app.UseCors("politicaGral");

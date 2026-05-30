@@ -18,68 +18,101 @@ namespace apiGymnasio.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<TblClase>> Get()
+        public List<TblClase> Get()
         {
-            return Ok(_opclase.listarClases());
+            return _opclase.listarClases();
         }
         [HttpGet("monitor/{id}")]
-        public ActionResult<List<TblClase>> GetByMonitor(int id)
+        public object GetByMonitor(int id)
         {
             var res = _opclase.listarClasesXMonitor(id);
-            if (res == null) return NotFound(_opclase.message);
-            return Ok(res);
+            if (res == null)
+            {
+                Response.StatusCode = 404;
+                return new { message = _opclase.message };
+            }
+            return res;
         }
 
         [HttpGet("sala/{id}")]
-        public ActionResult<List<TblClase>> GetBySala(int id)
+        public object GetBySala(int id)
         {
             var res = _opclase.listarClasesXSala(id);
-            if (res == null) return NotFound(_opclase.message);
-            return Ok(res);
+            if (res == null)
+            {
+                Response.StatusCode = 404;
+                return new { message = _opclase.message };
+            }
+            return res;
         }
 
         [HttpGet("especialidad/{id}")]
-        public ActionResult<List<TblClase>> GetByEspecialidad(int id)
+        public object GetByEspecialidad(int id)
         {
             var res = _opclase.listarClasesXEspecialidad(id);
-            if (res == null) return NotFound(_opclase.message);
-            return Ok(res);
+            if (res == null)
+            {
+                Response.StatusCode = 404;
+                return new { message = _opclase.message };
+            }
+            return res;
         }
 
         [HttpGet("{id}")]
-        public ActionResult<TblClase> Get(int id)
+        public object Get(int id)
         {
             var res = _opclase.listarClases(id);
-            if (res == null) return NotFound(_opclase.message);
-            return Ok(res);
+            if (res == null)
+            {
+                Response.StatusCode = 404;
+                return new { message = _opclase.message };
+            }
+            return res;
         }
 
         [HttpPost]
-        public ActionResult Post([FromBody] TblClase clase)
+        public object Post([FromBody] TblClase clase)
         {
             _opclase.tblClase = clase;
             var ok = _opclase.agregarClase();
-            if (!ok) return BadRequest(_opclase.message);
-            return CreatedAtAction(nameof(Get), new { id = clase.Codigo }, clase);
+            if (!ok)
+            {
+                Response.StatusCode = 400;
+                return new { message = _opclase.message };
+            }
+            Response.StatusCode = 201;
+            return clase;
         }
 
         [HttpPut("{id}")]
-        public ActionResult Put(int id, [FromBody] TblClase clase)
+        public string Put(int id, [FromBody] TblClase clase)
         {
-            if (clase == null || id != clase.Codigo) return BadRequest("Id inválido");
+            if (clase == null || id != clase.Codigo)
+            {
+                Response.StatusCode = 400;
+                return "Id inválido";
+            }
             _opclase.tblClase = clase;
             var ok = _opclase.modificarClase();
-            if (!ok) return BadRequest(_opclase.message);
-            return Ok(_opclase.message);
+            if (!ok)
+            {
+                Response.StatusCode = 400;
+                return _opclase.message;
+            }
+            return _opclase.message;
         }
 
         [HttpDelete("{id}")]
-        public ActionResult Delete(int id)
+        public object Delete(int id)
         {
             _opclase.tblClase = new TblClase { Codigo = id };
             var ok = _opclase.eliminarClase();
-            if (!ok) return BadRequest(_opclase.message);
-            return Ok(_opclase.message);
+            if (!ok)
+            {
+                Response.StatusCode = 400;
+                return new { message = _opclase.message };
+            }
+            return new { message = _opclase.message };
         }
     }
 }
