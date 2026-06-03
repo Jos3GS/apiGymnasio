@@ -20,6 +20,12 @@ namespace apiGymnasio.Controllers
         [HttpGet]
         public List<TblDetalleMatricula> Get() => _op.listarDetalleMatriculas();
 
+        [HttpGet("{id}")]
+        public List<TblDetalleMatricula> Get(int id)
+        {
+            return _op.listarDetalleMatriculas(id);
+        }
+
         [HttpPost]
         public object Post([FromBody] TblDetalleMatricula obj)
         {
@@ -33,11 +39,24 @@ namespace apiGymnasio.Controllers
             return obj;
         }
 
-        [HttpDelete("{id}")]
-        public object Delete(int id)
+        [HttpPost("AgregarDetalleInd")]
+        public int AdicionarDetalleInd(int codigo, int idClase)
         {
-            _op.tblDetalleMatricula = new TblDetalleMatricula { Codigo = id };
-            if (!_op.eliminarDetalleMatricula())
+            try
+            {
+                if (_op.agregarDetalleMatricula(codigo, idClase)) return 1;
+                else return -1;
+            }
+            catch 
+            {
+                return -1;
+            }
+        }
+
+        [HttpDelete]
+        public object Delete(int codigo, int matricula)
+        {
+            if (!_op.eliminarDetalleMatricula(codigo, matricula))
             {
                 Response.StatusCode = 400;
                 return new { message = _op.message };

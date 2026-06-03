@@ -18,6 +18,11 @@ namespace apiGymnasio.Clases
             return oGym.TblDetalleMatriculas.OrderBy(x => x.Codigo).ToList();
         }
 
+        public List<TblDetalleMatricula> listarDetalleMatriculas(int codigo)
+        {
+            return oGym.TblDetalleMatriculas.OrderBy(x => x.FechaMatricula).Where(x => x.FkMatricula == codigo).ToList();
+        }
+
         public bool agregarDetalleMatricula()
         {
             try
@@ -38,16 +43,43 @@ namespace apiGymnasio.Clases
             }
         }
 
-        public bool eliminarDetalleMatricula()
+        public bool agregarDetalleMatricula(int codigo, int idClase)
         {
             try
             {
-                if (tblDetalleMatricula == null)
+                TblDetalleMatricula temp = new TblDetalleMatricula()
+                {
+                    FechaMatricula = DateOnly.Parse(DateTime.Now.ToShortDateString()),
+                    FkClase = idClase,
+                    FkMatricula = codigo
+                };
+                if (temp == null)
                 {
                     message = "No se proporcionó información de detalle de matrícula.";
                     return false;
                 }
-                oGym.Remove(tblDetalleMatricula);
+                oGym.TblDetalleMatriculas.Add(temp);
+                oGym.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                message = "Error al agregar el detalle de matrícula. Reintentalo nuevamente.";
+                return false;
+            }
+        }
+
+        public bool eliminarDetalleMatricula(int codigo, int matricula)
+        {
+            try
+            {
+                var temp = oGym.TblDetalleMatriculas.FirstOrDefault(x => x.FkClase == codigo && x.FkMatricula == matricula);
+                if (temp == null)
+                {
+                    message = "No se proporcionó información de detalle de matrícula.";
+                    return false;
+                }
+                oGym.TblDetalleMatriculas.Remove(temp);
                 oGym.SaveChanges();
                 return true;
             }

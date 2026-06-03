@@ -1,4 +1,5 @@
-﻿using apiGymnasio.Models;
+﻿using apiGymnasio.Clases.Auxiliar;
+using apiGymnasio.Models;
 
 namespace apiGymnasio.Clases
 {
@@ -39,23 +40,33 @@ namespace apiGymnasio.Clases
 
 
 
-        public bool agregarMatricula()
+        public int agregarMatricula(inscripCompleta inscripcionWeb)
         {
             try
             {
-                if (tblMatricula == null)
+                if (inscripcionWeb == null)
                 {
                     message = "No se proporcionó información de matrícula.";
-                    return false;
+                    return -1;
                 }
-                oGym.Add(tblMatricula);
+                TblMatricula temp = new TblMatricula()
+                {
+                    Codigo = inscripcionWeb.Codigo,
+                    FechaInicio = DateOnly.Parse(DateTime.Now.ToShortDateString()),
+                    FechaFin = DateOnly.FromDateTime(DateTime.Now.AddMonths(1)),
+                    Recurrente = inscripcionWeb.Recurrente,
+                    MontoPagado = inscripcionWeb.MontoPagado,
+                    FkFormaPago = inscripcionWeb.FkFormaPago,
+                    UsuarioCrea = inscripcionWeb.UsuarioCrea
+                };
+                oGym.TblMatriculas.Add(temp);
                 oGym.SaveChanges();
-                return true;
+                return temp.Codigo;
             }
             catch
             {
                 message = "Error al agregar la matrícula. Reintentalo nuevamente.";
-                return false;
+                return -1;
             }
         }
 

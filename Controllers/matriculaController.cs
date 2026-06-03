@@ -1,4 +1,5 @@
 using apiGymnasio.Clases;
+using apiGymnasio.Clases.Auxiliar;
 using apiGymnasio.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -32,19 +33,6 @@ namespace apiGymnasio.Controllers
             return res;
         }
 
-        [HttpPost]
-        public object Post([FromBody] TblMatricula obj)
-        {
-            _op.tblMatricula = obj;
-            if (!_op.agregarMatricula())
-            {
-                Response.StatusCode = 400;
-                return new { message = _op.message };
-            }
-            Response.StatusCode = 201;
-            return obj;
-        }
-
         [HttpPut("{id}")]
         public object Put(int id, [FromBody] TblMatricula obj)
         {
@@ -73,5 +61,21 @@ namespace apiGymnasio.Controllers
             }
             return new { message = _op.message };
         }
+
+        [HttpPost("registrarInscripcion")]
+        public int registrarInscripcion([FromBody] inscripCompleta inscripcionWeb)
+        {
+            try
+            {
+                clsOpeMatricula opeMatricula = new clsOpeMatricula(_context);
+                int idMatricula = opeMatricula.agregarMatricula(inscripcionWeb);
+                return idMatricula;
+            }
+            catch 
+            {
+                return -1;
+            }
+        }
+
     }
 }
